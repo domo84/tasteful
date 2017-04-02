@@ -4,22 +4,27 @@ abstract class Resource
 {
 	public function get()
 	{
-		throw new Exception\Resource\Verb\NotImplemented();
+		throw new Exception\Resource\Verb\NotImplemented("GET");
 	}
 
 	public function post()
 	{
-		throw new Exception\Resource\Verb\NotImplemented();
+		throw new Exception\Resource\Verb\NotImplemented("POST");
 	}
 
 	public function put()
 	{
-		throw new Exception\Resource\Verb\NotImplemented();
+		throw new Exception\Resource\Verb\NotImplemented("PUT");
 	}
 
 	public function delete()
 	{
-		throw new Exception\Resource\Verb\NotImplemented();
+		throw new Exception\Resource\Verb\NotImplemented("DELETE");
+	}
+
+	public function options()
+	{
+		return new \Response\Options();
 	}
 
 	public static function find($request)
@@ -46,29 +51,29 @@ abstract class Resource
 		}
 		else
 		{
-			throw new Exception\Resource\NotFound();
+			throw new Exception\Resource\NotFound($class);
 		}
 	}
 
 	public function run($request)
 	{
 		$method = strtolower($request->method);
+		$body = $request->body;
 
 		if(method_exists($this, $method))
 		{
 			if($request->resourceId == null)
 			{
-				return $this->$method();
+				return $this->$method($body);
 			}
 			else
 			{
-				return $this->$method($request->resourceId);
+				return $this->$method($request->resourceId, $body);
 			}
 		}
 		else
 		{
-			throw new Exception\Resource\Verb\NotSupported();
+			throw new Exception\Resource\Verb\NotSupported($method);
 		}
 	}
 }
-
