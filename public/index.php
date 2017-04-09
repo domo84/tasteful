@@ -14,8 +14,6 @@ require_once "traits.php";
 # require_once "database.php";
 # require_once "resources/example.php";
 
-define("CONTENT_PATH", __DIR__ . "/../content");
-
 try
 {
 	$request = new Request($_SERVER);
