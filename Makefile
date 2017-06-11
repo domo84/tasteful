@@ -1,2 +1,2 @@
 start:
-	php -S 0.0.0.0:8080 -t public dev-routing.php
+	cd public && php -S 0.0.0.0:8080

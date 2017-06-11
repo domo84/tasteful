@@ -6,7 +6,9 @@ abstract class Database extends \SQLite3
 {
 	public function __construct()
 	{
-		$this->open("services.db");
+		$this->open("../data/services.db");
+
+		$this->query("CREATE TABLE IF NOT EXISTS example ( _id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, content TEXT )");
 	}
 
 	public static function associate($result)
@@ -26,7 +28,7 @@ abstract class Database extends \SQLite3
 			return $row;
 		}
 
-		return null;
+		throw new \Exception\Resource\NotFound(); // return null;
 	}
 }
 
@@ -38,7 +40,23 @@ class Example extends Database
 		return Database::associate($result);
 	}
 
-	public function one($id)
+	public function delete(string $id)
+	{
+		$statement = $this->prepare("DELETE FROM example WHERE _id = :id");
+		$statement->bindValue(":id", $id);
+		$statement->execute();
+	}
+
+	public function insert(\stdClass $values): string
+	{
+		$statement = $this->prepare("INSERT INTO example VALUES(NULL, :name, :content)");
+		$statement->bindValue(":name", $values->name);
+		$statement->bindValue(":content", $values->content);
+		$statement->execute();
+		return $this->lastInsertRowId();
+	}
+
+	public function one(string $id): array
 	{
 		$statement = $this->prepare("SELECT * FROM example WHERE _id = :id");
 		$statement->bindValue(":id", $id);
@@ -46,9 +64,15 @@ class Example extends Database
 		return Database::associateOne($result);
 	}
 
-	public function update($id, $values)
+	public function update(string $id, \stdClass $values)
 	{
 		// Loop through $values->items and update one by one?
+
+		$statement = $this->prepare("UPDATE example SET name = :name, content = :content WHERE _id = :id");
+		$statement->bindValue(":name", $values->name);
+		$statement->bindValue(":content", $values->content);
+		$statement->bindValue(":id", $id);
+		$statement->execute();
 	}
 }
 

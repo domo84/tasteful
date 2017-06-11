@@ -29,7 +29,7 @@ class JSON extends Response
 
 	public function __construct($body)
 	{
-		$this->body = $this->isJSON($body) ? $body . "\n\r" : json_encode($body) . "\n\r";
+		$this->body = $this->isJSON($body) ? $body . "\n\r" : json_encode($body, JSON_UNESCAPED_UNICODE) . "\n\r";
 		$this->headers[] = "Content-Type: application/json; charset=utf-8";
 		$this->headers[] = "Content-Length: " . strlen($this->body);
 	}

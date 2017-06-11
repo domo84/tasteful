@@ -1,18 +1,18 @@
 <?php
 
-require_once __DIR__ . '/vendor/autoload.php';
+# require_once __DIR__ . '/vendor/autoload.php';
 
 # Core
-require_once "exceptions.php";
-require_once "request.php";
-require_once "response.php";
-require_once "resource.php";
-require_once "subresource.php";
-require_once "traits.php";
+require_once "../core/exceptions.php";
+require_once "../core/request.php";
+require_once "../core/response.php";
+require_once "../core/resource.php";
+require_once "../core/subresource.php";
+require_once "../core/traits.php";
 
 # Mods
-# require_once "database.php";
-# require_once "resources/example.php";
+require_once "../database.php";
+require_once "../resources/example.php";
 
 try
 {
@@ -20,12 +20,12 @@ try
 
 	if(is_null($request->subresource))
 	{
-		$resource = Resource::find($request);
+		$resource = \Resource\Resource::find($request);
 		$response = $resource->run($request);
 	}
 	else
 	{
-		$subresource = Subresource::find($request);
+		$subresource = \Subresource\Subresource::find($request);
 		$response = $subresource->run($request);
 	}
 

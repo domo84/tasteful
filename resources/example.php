@@ -3,75 +3,94 @@
 /*
 
 Resources:
-/example (all)
-/example/1 (one)
-/example/1/items (subitems all)
-/example/1/items/1 (subitems one)
+/examples (all)
+/examples/1 (one)
+/examples/1/items (subitems all)
+/examples/1/items/1 (subitems one)
 
 */
 
-class Examples extends Resource
+class Examples extends Resource\Many
 {
+	use DB;
+
 	/**
-	 * GET /example
+	 * GET /examples
 	 */
-	public function get(Request $request)
+	public function get(Request $request): Response\JSON
 	{
+		$contents = $this->db("Example")->all();
+		return new Response\JSON($contents);
 	}
 
 	/**
-	 * POST /example '{ "name": "Name" }'
+	 * POST /examples '{ "name": "Name" }'
+	 */
+	public function post(Request $request): Response\JSON
+	{
+		$id = $this->db("Example")->insert($request->body);
+		$content = $this->db("Example")->one($id);
+		return new Response\JSON($content);
+	}
+}
+
+class Example extends Resource\One
+{
+	use DB;
+
+	/**
+	 * DELETE /example/1
+	 */
+	public function delete(Request $request): Response\NoContent
+	{
+		$this->db("Example")->delete($request->resourceId);
+		return new Response\NoContent();
+	}
+
+	/**
+	 * GET /examples/1
+	 */
+	public function get(Request $request): Response\JSON
+	{
+		$content = $this->db("Example")->one($request->resourceId);
+		return new Response\JSON($content);
+	}
+
+	/**
+	 * PUT /examples/1 '{ "name": "New name" }'
+	 */
+	public function put(Request $request): Response\JSON
+	{
+		$this->db("Example")->update($request->resourceId, $request->body);
+		$content = $this->db("Example")->one($request->resourceId);
+		return new Response\JSON($content);
+	}
+}
+
+class Example_Items extends Subresource\Many
+{
+	/**
+	 * GET /examples/1/items
+	 */
+	public function get(Request $request)
+	{
+		$id = $request->resourceId;
+	}
+
+	/**
+	 * POST /examples/1/items '{ "title": "Title" }'
 	 */
 	public function post(Request $request)
 	{
-		$content = $request->body;
-	}
-}
-
-class Example extends Resource
-{
-	/**
-	 * GET /example/1
-	 */
-	public function get(Request $request)
-	{
-		$id = $request->resourceId;
-	}
-
-	/**
-	 * PUT /example/1 '{ "name": "New name" }'
-	 */
-	public function put(Request $request)
-	{
 		$id = $request->resourceId;
 		$content = $request->body;
 	}
 }
 
-class Example_Items extends Subresource
+class Example_Item extends Subresource\One
 {
 	/**
-	 * GET /example/1/items
-	 */
-	public function get(Request $request)
-	{
-		$id = $request->resourceId;
-	}
-
-	/**
-	 * POST /example/1/items '{ "title": "Title" }'
-	 */
-	public function post(Request $request)
-	{
-		$id = $request->resourceId;
-		$content = $request->body;
-	}
-}
-
-class Example_Item extends Subresource
-{
-	/**
-	 * GET /example/1/items/1
+	 * GET /examples/1/items/1
 	 */
 	public function get(Request $request)
 	{
@@ -80,7 +99,7 @@ class Example_Item extends Subresource
 	}
 
 	/**
-	 * PUT /example/1/items/1 '{ "title": "New title" }'
+	 * PUT /examples/1/items/1 '{ "title": "New title" }'
 	 */
 	public function put(Request $request)
 	{
