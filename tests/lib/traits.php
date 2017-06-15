@@ -39,8 +39,8 @@ trait provider
 	public function moreItems()
 	{
 		return [
-			[["_id" => 1, "name" => "new_name#1"]],
-			[["_id" => 2, "name" => "il_nome#2"]]
+			[["_id" => 1, "example_id" => 1, "name" => "new_name#1"]],
+			[["_id" => 2, "example_id" => 1, "name" => "il_nome#2"]]
 		];
 	}
 

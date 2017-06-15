@@ -80,7 +80,7 @@ abstract class Subresource
 			return $obj;
 		}
 
-		throw new \Exception\Subresource\NotFound($class);
+		throw new \Exception\Resource\NotFound($class);
 	}
 
 	public function run()

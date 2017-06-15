@@ -75,7 +75,7 @@ final class Database_Example_Test extends TestCase
 	}
 
 	/**
-	 * @dataProvider faultyData
+	 * @dataProvider faultyExamples
 	 * @expectedException Exception\Database\MissingKey
 	 */
 	public function testInsertFaultyData($example)

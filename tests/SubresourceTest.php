@@ -24,7 +24,7 @@ final class Subesource_Test extends TestCase
 	}
 
 	/**
-	 * @expectedException Exception\Subresource\NotFound
+	 * @expectedException Exception\Resource\NotFound
 	 */
 	public function testNotFound()
 	{
@@ -33,7 +33,7 @@ final class Subesource_Test extends TestCase
 	}
 
 	/**
-	 * @expectedException Exception\Subresource\Verb\NotImplemented
+	 * @expectedException Exception\Resource\Verb\NotImplemented
 	 * @dataProvider provider
 	 */
 	public function testNotImplemented($req)
@@ -43,7 +43,7 @@ final class Subesource_Test extends TestCase
 	}
 
 	/**
-	 * @expectedException Exception\Subresource\Verb\NotSupported
+	 * @expectedException Exception\Resource\Verb\NotSupported
 	 */
 	public function testMethodNotSupported()
 	{

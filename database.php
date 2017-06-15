@@ -99,7 +99,7 @@ class Example_Item extends Database
 		return Database::associate($result);
 	}
 
-	public function one($id)
+	public function one(string $id): array
 	{
 		$statement = $this->prepare("SELECT * FROM example_item WHERE _id = :id");
 		$statement->bindValue(":id", $id);
@@ -109,7 +109,7 @@ class Example_Item extends Database
 
 	public function update(string $id, array $values)
 	{
-		$statement = $this->prepare("UPDATE example_item SET name = :name, WHERE _id = :id");
+		$statement = $this->prepare("UPDATE example_item SET name = :name WHERE _id = :id");
 		$statement->bindValue(":id", $id);
 		$statement->bindValue(":name", $values["name"]);
 		$statement->execute();

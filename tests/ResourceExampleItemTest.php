@@ -27,10 +27,10 @@ final class Resource_Example_Item_Test extends TestCase
 	 * Only for setting up data
 	 * @dataProvider items
 	 */
-	public function testInsertItems($example)
+	public function testInsertItems($item)
 	{
 		list($result, $code) = $this->rest_client->post("examples/1/items", $item);
-		$this->assertEquals($example, $result);
+		$this->assertEquals($item, $result);
 		$this->assertEquals(200, $code);
 	}
 
@@ -51,7 +51,7 @@ final class Resource_Example_Item_Test extends TestCase
 	public function testPut($item)
 	{
 		$id = $item["_id"];
-		list($result, $code) = $this->rest_client->put("examples/items/$id", $item);
+		list($result, $code) = $this->rest_client->put("examples/1/items/$id", $item);
 		$this->assertEquals($item, $result);
 		$this->assertEquals(200, $code);
 	}
@@ -70,7 +70,7 @@ final class Resource_Example_Item_Test extends TestCase
 	{
 		list($result, $code) = $this->rest_client->delete("example/1/items/100");
 		$this->assertNull($result);
-		$this->assertEquals(404, $code);
+		$this->assertEquals(204, $code);
 	}
 
 	/**

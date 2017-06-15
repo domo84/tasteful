@@ -96,13 +96,19 @@ class Example_Item extends Subresource\One
 {
 	use DB;
 
+	public function delete(Request $request): Response\NoContent
+	{
+		$this->db("Example_Item")->delete($request->subresourceId);
+		return new Response\NoContent();
+	}
+
 	/**
 	 * GET /examples/1/items/1
 	 */
 	public function get(Request $request): Response\JSON
 	{
-		$id = $request->resourceId;
-		$subId = $request->subresourceId;
+		$content = $this->db("Example_Item")->one($request->subresourceId);
+		return new Response\JSON($content);
 	}
 
 	/**
@@ -110,14 +116,8 @@ class Example_Item extends Subresource\One
 	 */
 	public function put(Request $request): Response\JSON
 	{
-		$id = $request->resourceId;
-		$subId = $request->subresourceId;
-		$content = $request->body;
-	}
-
-	public function delete(Request $request): Response\NoContent
-	{
-		$this->db("Example_Item")->delete($request->subresourceId);
-		return new Response\NoContent;
+		$this->db("Example_Item")->update($request->subresourceId, $request->body);
+		$content = $this->db("Example_Item")->one($request->subresourceId);
+		return new Response\JSON($content);
 	}
 }
