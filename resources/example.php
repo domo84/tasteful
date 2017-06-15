@@ -86,7 +86,7 @@ class Example_Items extends Subresource\Many
 	 */
 	public function post(Request $request): Response\JSON
 	{
-		$id = $this->db("Example_Item")->insert($request->resourceId, $request->body);
+		$id = $this->db("Example_Item")->insert($request->body);
 		$content = $this->db("Example_Item")->one($id);
 		return new Response\JSON($content);
 	}

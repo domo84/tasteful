@@ -91,7 +91,7 @@ class Example extends Database
 
 class Example_Item extends Database
 {
-	public function allByParentId($parentId)
+	public function allByParentId(string $parentId): array
 	{
 		$statement = $this->prepare("SELECT * FROM example_item WHERE example_id = :example_id");
 		$statement->bindValue(":example_id", $parentId);
@@ -115,16 +115,17 @@ class Example_Item extends Database
 		$statement->execute();
 	}
 
-	public function insert(string $parentId, array $values): string
+	public function insert(array $values): int
 	{
+		$this->assert(array("name", "example_id"), $values);
 		$statement = $this->prepare("INSERT INTO example_item VALUES(NULL, :example_id, :name)");
-		$statement->bindValue(":example_id", $parentId);
+		$statement->bindValue(":example_id", $values["example_id"]);
 		$statement->bindValue(":name", $values["name"]);
 		$statement->execute();
-		return $this->lastInsertRowId();
+		return (int) $this->lastInsertRowId();
 	}
 
-	public function delete($id)
+	public function delete(string $id)
 	{
 		$statement = $this->prepare("DELETE FROM example_item WHERE _id = :id");
 		$statement->bindValue(":id", $id);
