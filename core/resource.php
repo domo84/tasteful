@@ -30,7 +30,6 @@ abstract class One extends Resource
 	{
 		return new \Response\Options();
 	}
-
 }
 
 abstract class Many extends Resource
@@ -63,7 +62,7 @@ abstract class Many extends Resource
 
 abstract class Resource
 {
-	public static function find($request)
+	public static function find(\Request $request)
 	{
 		if($request->resourceId == null)
 		{
@@ -77,39 +76,22 @@ abstract class Resource
 		if(class_exists($class))
 		{
 			$obj = new $class;
-
-			if($request->resourceId != null)
-			{
-				$obj->resourceId = $request->resourceId;
-			}
-
-			return new $class;
+			$obj->request = $request;
+			return $obj;
 		}
-		else
-		{
-			throw new \Exception\Resource\NotFound($class);
-		}
+
+		throw new \Exception\Resource\NotFound($class);
 	}
 
-	public function run($request)
+	public function run()
 	{
-		$method = strtolower($request->method);
-		$body = $request->body;
+		$method = strtolower($this->request->method);
 
 		if(method_exists($this, $method))
 		{
-			if($request->resourceId == null)
-			{
-				return $this->$method($request); // $body);
-			}
-			else
-			{
-				return $this->$method($request); // ->resourceId, $body);
-			}
+			return $this->$method($this->request);
 		}
-		else
-		{
-			throw new \Exception\Resource\Verb\NotSupported($method);
-		}
+
+		throw new \Exception\Resource\Verb\NotSupported($method);
 	}
 }

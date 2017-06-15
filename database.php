@@ -6,9 +6,10 @@ abstract class Database extends \SQLite3
 {
 	public function __construct()
 	{
-		$this->open("../data/services.db");
+		$this->open(__DIR__ . "/data/services.db");
 
-		$this->query("CREATE TABLE IF NOT EXISTS example ( _id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, content TEXT )");
+		$this->query("CREATE TABLE IF NOT EXISTS example (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, content TEXT)");
+		$this->query("CREATE TABLE IF NOT EXISTS example_item (_id INTEGER PRIMARY KEY AUTOINCREMENT, example_id INTEGER, name TEXT)");
 	}
 
 	public static function associate($result)
@@ -28,7 +29,20 @@ abstract class Database extends \SQLite3
 			return $row;
 		}
 
-		throw new \Exception\Resource\NotFound(); // return null;
+		throw new \Exception\Resource\NotFound();
+	}
+
+	public function assert($expected, $actual)
+	{
+		foreach($expected as $key)
+		{
+			if(array_key_exists($key, $actual))
+			{
+				continue;
+			}
+
+			throw new \Exception\Database\MissingKey("Missing required key: $key");
+		}
 	}
 }
 
@@ -47,13 +61,14 @@ class Example extends Database
 		$statement->execute();
 	}
 
-	public function insert(\stdClass $values): string
+	public function insert(array $values): int
 	{
+		$this->assert(array("name", "content"), $values);
 		$statement = $this->prepare("INSERT INTO example VALUES(NULL, :name, :content)");
-		$statement->bindValue(":name", $values->name);
-		$statement->bindValue(":content", $values->content);
+		$statement->bindValue(":name", $values["name"]);
+		$statement->bindValue(":content", $values["content"]);
 		$statement->execute();
-		return $this->lastInsertRowId();
+		return (int) $this->lastInsertRowId();
 	}
 
 	public function one(string $id): array
@@ -64,13 +79,11 @@ class Example extends Database
 		return Database::associateOne($result);
 	}
 
-	public function update(string $id, \stdClass $values)
+	public function update(string $id, array $values)
 	{
-		// Loop through $values->items and update one by one?
-
 		$statement = $this->prepare("UPDATE example SET name = :name, content = :content WHERE _id = :id");
-		$statement->bindValue(":name", $values->name);
-		$statement->bindValue(":content", $values->content);
+		$statement->bindValue(":name", $values["name"]);
+		$statement->bindValue(":content", $values["content"]);
 		$statement->bindValue(":id", $id);
 		$statement->execute();
 	}
@@ -78,10 +91,10 @@ class Example extends Database
 
 class Example_Item extends Database
 {
-	public function allByParentId($exampleId)
+	public function allByParentId($parentId)
 	{
-		$statement = $this->prepare("SELECT * FROM example_item WHERE example_id = :example_id ORDER BY position ASC");
-		$statement->bindValue(":example_id", $exampleId);
+		$statement = $this->prepare("SELECT * FROM example_item WHERE example_id = :example_id");
+		$statement->bindValue(":example_id", $parentId);
 		$result = $statement->execute();
 		return Database::associate($result);
 	}
@@ -94,22 +107,19 @@ class Example_Item extends Database
 		return Database::associateOne($result);
 	}
 
-	public function update($id, $values)
+	public function update(string $id, array $values)
 	{
-		$statement = $this->prepare("UPDATE example_item SET name = :name, value = :value, position = :position WHERE _id = :id");
+		$statement = $this->prepare("UPDATE example_item SET name = :name, WHERE _id = :id");
 		$statement->bindValue(":id", $id);
-		$statement->bindValue(":name", $values->name);
-		$statement->bindValue(":value", $values->value);
-		$statement->bindValue(":position", $values->position);
+		$statement->bindValue(":name", $values["name"]);
 		$statement->execute();
 	}
 
-	public function insert($exampleId, $values)
+	public function insert(string $parentId, array $values): string
 	{
-		$statement = $this->prepare("INSERT INTO example_item VALUES(NULL, :example_id, :name, :value, 100)");
-		$statement->bindValue(":example_id", $exampleId);
-		$statement->bindValue(":name", $values->name);
-		$statement->bindValue(":value", $values->value);
+		$statement = $this->prepare("INSERT INTO example_item VALUES(NULL, :example_id, :name)");
+		$statement->bindValue(":example_id", $parentId);
+		$statement->bindValue(":name", $values["name"]);
 		$statement->execute();
 		return $this->lastInsertRowId();
 	}

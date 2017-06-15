@@ -18,15 +18,23 @@ try
 {
 	$request = new Request($_SERVER);
 
-	if(is_null($request->subresource))
+	if($request->subresource)
+	{
+		$subresource = \Subresource\Subresource::find($request);
+		$response = $subresource->run($request);
+	}
+	else if($request->resource)
 	{
 		$resource = \Resource\Resource::find($request);
 		$response = $resource->run($request);
 	}
 	else
 	{
-		$subresource = \Subresource\Subresource::find($request);
-		$response = $subresource->run($request);
+		$content = array(
+			"name" => "Sunnyvale API",
+			"version" => 1
+		);
+		$response = new Response\JSON($content);
 	}
 
 	foreach($response->headers as $header)
@@ -64,4 +72,9 @@ catch(Exception\Subresource\NotFound $e)
 {
 	http_response_code(404);
 	error_log(sprintf("The subresource '%s' you are looking for does not exists", $e->getMessage()));
+}
+catch(Exception\Database\MissingKey $e)
+{
+	http_response_code(422);
+	error_log(sprintf("Client sent faulty data: %s", $e->getMessage()));
 }

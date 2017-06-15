@@ -31,3 +31,9 @@ class NotSupported extends \Exception
 class NotImplemented extends \Exception
 {
 }
+
+namespace Exception\Database;
+
+class MissingKey extends \Exception
+{
+}

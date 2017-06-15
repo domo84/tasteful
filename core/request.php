@@ -19,7 +19,7 @@ class Request
 		$this->method = $server["REQUEST_METHOD"];
 		$uri = $server["REQUEST_URI"];
 		$this->parseRequestUri($uri);
-		$this->body = json_decode(file_get_contents("php://input"));
+		$this->body = json_decode(file_get_contents("php://input"), true);
 	}
 
 	private function parseRequestUri($uri)

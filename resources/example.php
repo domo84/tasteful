@@ -69,30 +69,37 @@ class Example extends Resource\One
 
 class Example_Items extends Subresource\Many
 {
+	use DB;
+
 	/**
 	 * GET /examples/1/items
 	 */
-	public function get(Request $request)
+	public function get(Request $request): Response\JSON
 	{
 		$id = $request->resourceId;
+		$content = $this->db("Example_Item")->allByParentId($id);
+		return new Response\JSON($content);
 	}
 
 	/**
 	 * POST /examples/1/items '{ "title": "Title" }'
 	 */
-	public function post(Request $request)
+	public function post(Request $request): Response\JSON
 	{
-		$id = $request->resourceId;
-		$content = $request->body;
+		$id = $this->db("Example_Item")->insert($request->resourceId, $request->body);
+		$content = $this->db("Example_Item")->one($id);
+		return new Response\JSON($content);
 	}
 }
 
 class Example_Item extends Subresource\One
 {
+	use DB;
+
 	/**
 	 * GET /examples/1/items/1
 	 */
-	public function get(Request $request)
+	public function get(Request $request): Response\JSON
 	{
 		$id = $request->resourceId;
 		$subId = $request->subresourceId;
@@ -101,10 +108,16 @@ class Example_Item extends Subresource\One
 	/**
 	 * PUT /examples/1/items/1 '{ "title": "New title" }'
 	 */
-	public function put(Request $request)
+	public function put(Request $request): Response\JSON
 	{
 		$id = $request->resourceId;
 		$subId = $request->subresourceId;
 		$content = $request->body;
+	}
+
+	public function delete(Request $request): Response\NoContent
+	{
+		$this->db("Example_Item")->delete($request->subresourceId);
+		return new Response\NoContent;
 	}
 }
