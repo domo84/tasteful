@@ -2,43 +2,44 @@
 
 namespace Sunnyvale\REST;
 
-require "exceptions.php";
-
 class Server
 {
+    private $server = null;
+    private $response = null;
+
     public $resources = array();
     public $standardResponse = array("name" => "Sunnyvale API", "version" => 1);
+
+    public function __construct($server)
+    {
+        $this->server = $server;
+    }
 
     public function run()
     {
         try {
-            $request = new Request($_SERVER);
+            $request = new Request($this->server);
 
             if ($request->resource == null) {
                 $response = new Response\JSON($this->standardResponse);
             } else {
                 if (!isset($this->resources[$request->path])) {
-                    throw new \Exception\Resource\NotFound($request->resource);
+                    throw new Exceptions\Resource\NotFound($request->resource);
                 }
 
                 $class = $this->resources[$request->path];
+
+                if (!class_exists($class)) {
+                    throw new Exceptions\Resource\NotImplemented($class);
+                }
+
                 $resource = new $class();
                 $resource->request = $request;
                 $response = $resource->run();
             }
 
-            foreach ($response->headers as $header) {
-                header($header);
-            }
-
-            if ($response->code) {
-                http_response_code($response->code);
-            }
-
-            if ($response->body != null) {
-                echo $response->body;
-                echo "\n";
-            }
+            $this->response = $response;
+            return $response;
         } catch (\Exception\Resource\NotFound $e) {
             http_response_code(404);
             error_log(sprintf("The resource '%s' you are looking for does not exist", $e->getMessage()));
@@ -54,6 +55,22 @@ class Server
         } catch (\Exception\Database\MissingKey $e) {
             http_response_code(422);
             error_log(sprintf("Client sent faulty data: %s", $e->getMessage()));
+        }
+    }
+
+    public function output()
+    {
+        foreach ($response->headers as $header) {
+            header($header);
+        }
+
+        if ($response->code) {
+            http_response_code($response->code);
+        }
+
+        if ($response->body != null) {
+            echo $response->body;
+            echo "\n";
         }
     }
 }

@@ -17,4 +17,5 @@ $server->resources = [
     "examples" => "\Sunnyexample\Resources\Examples",
     "examples/items" => "\Sunnyexample\Resources\Example_Items"
 ];
-$server->run();
+
+print $server->run();

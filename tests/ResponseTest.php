@@ -1,10 +1,11 @@
 <?php
 
-require_once "core/response.php";
+namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
+use Sunnyvale\REST\Response;
 
-final class Response_Test extends TestCase
+final class ResponseTest extends TestCase
 {
     public function examples()
     {

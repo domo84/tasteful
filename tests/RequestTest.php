@@ -1,10 +1,11 @@
 <?php
 
-require_once "core/request.php";
+namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
+use Sunnyvale\REST\Request;
 
-final class Request_Test extends TestCase
+final class RequestTest extends TestCase
 {
     /**
      * @dataProvider provider
@@ -30,6 +31,7 @@ final class Request_Test extends TestCase
 
         $expected1 = [
             "method" => "GET",
+            "path" => "examples",
             "resource" => "examples",
             "resourceId" => null,
             "body" => null
@@ -42,6 +44,7 @@ final class Request_Test extends TestCase
 
         $expected2 = [
             "method" => "DELETE",
+            "path" => "examples",
             "resource" => "examples",
             "resourceId" => 10,
             "body" => null
@@ -54,6 +57,7 @@ final class Request_Test extends TestCase
 
         $expected3 = [
             "method" => "POST",
+            "path" => "examples/items",
             "resource" => "examples",
             "resourceId" => 10,
             "subresource" => "items",
@@ -67,6 +71,7 @@ final class Request_Test extends TestCase
 
         $expected4 = [
             "method" => "PUT",
+            "path" => "examples/items",
             "resource" => "examples",
             "resourceId" => 10,
             "subresource" => "items",

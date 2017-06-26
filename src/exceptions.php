@@ -1,12 +1,17 @@
 <?php
 
-namespace Exception\Resource;
+namespace Sunnyvale\REST\Exceptions\Resource;
 
 class NotFound extends \Exception
 {
 }
 
-namespace Exception\Resource\Verb;
+// @codingStandardsIgnoreLine
+class NotImplemented extends \Exception
+{
+}
+
+namespace Sunnyvale\REST\Exceptions\Resource\Verb;
 
 // @codingStandardsIgnoreLine
 class NotSupported extends \Exception
@@ -18,7 +23,7 @@ class NotImplemented extends \Exception
 {
 }
 
-namespace Exception\Database;
+namespace Sunnyvale\REST\Exceptions\Database;
 
 // @codingStandardsIgnoreLine
 class MissingKey extends \Exception

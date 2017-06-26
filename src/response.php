@@ -1,6 +1,6 @@
 <?php
 
-namespace Response;
+namespace Sunnyvale\REST\Response;
 
 abstract class Response
 {
