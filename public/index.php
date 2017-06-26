@@ -1,18 +1,25 @@
 <?php
 
+require_once "../psr4-autoloader.php";
+
+$loader = new Sunnyvale\Psr4AutoloaderClass;
+$loader->register();
+$loader->addNamespace("Sunnyvale\REST", "../src");
+$loader->addNamespace("Sunnyvale\REST", "../resources");
+
 # require_once __DIR__ . '/vendor/autoload.php';
 
 # Core
-require_once "../core/exceptions.php";
-require_once "../core/request.php";
-require_once "../core/response.php";
-require_once "../core/resource.php";
-require_once "../core/subresource.php";
-require_once "../core/traits.php";
+# require_once "../core/exceptions.php";
+# require_once "../core/request.php";
+# require_once "../core/response.php";
+# require_once "../core/resource.php";
+# require_once "../core/subresource.php";
+# require_once "../core/traits.php";
 
 # Mods
-require_once "../database.php";
-require_once "../resources/example.php";
+# require_once "../database.php";
+# require_once "../resources/example.php";
 
 try {
     $request = new Request($_SERVER);
