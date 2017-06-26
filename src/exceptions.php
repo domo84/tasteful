@@ -8,32 +8,19 @@ class NotFound extends \Exception
 
 namespace Exception\Resource\Verb;
 
+// @codingStandardsIgnoreLine
 class NotSupported extends \Exception
 {
 }
 
-class NotImplemented extends \Exception
-{
-}
-
-namespace Exception\Subresource;
-
-class NotFound extends \Exception
-{
-}
-
-namespace Exception\Subresource\Verb;
-
-class NotSupported extends \Exception
-{
-}
-
+// @codingStandardsIgnoreLine
 class NotImplemented extends \Exception
 {
 }
 
 namespace Exception\Database;
 
+// @codingStandardsIgnoreLine
 class MissingKey extends \Exception
 {
 }

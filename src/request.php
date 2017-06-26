@@ -1,5 +1,7 @@
 <?php
 
+namespace Sunnyvale\REST;
+
 class Request
 {
     const GET = "GET";
@@ -8,7 +10,8 @@ class Request
     const HEAD = "HEAD";
 
     public $method;
-    public $resource;
+    public $path = null;
+    public $resource = null;
     public $resourceId = null;
     public $subresource = null;
     public $subresourceId = null;
@@ -32,6 +35,7 @@ class Request
                 case 0:
                 {
                     $this->resource = $parts[0];
+                    $this->path = $parts[0];
                     break;
                 }
                 case 1:
@@ -42,6 +46,7 @@ class Request
                 case 2:
                 {
                     $this->subresource = $parts[2];
+                    $this->path = $parts[0] . "/" . $parts[2];
                     break;
                 }
                 case 3:

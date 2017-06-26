@@ -179,6 +179,7 @@ class Psr4AutoloaderClass
      */
     protected function requireFile($file)
     {
+        $file = strtolower($file);
         if (file_exists($file)) {
             require $file;
             return true;

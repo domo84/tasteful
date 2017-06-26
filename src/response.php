@@ -13,16 +13,19 @@ abstract class Response
     );
 }
 
+// @codingStandardsIgnoreLine
 class Options extends Response
 {
     public $code = 200;
 }
 
+// @codingStandardsIgnoreLine
 class Conflict extends Response
 {
     public $code = 409;
 }
 
+// @codingStandardsIgnoreLine
 class JSON extends Response
 {
     public $code = 200;
@@ -48,11 +51,13 @@ class JSON extends Response
     }
 }
 
+// @codingStandardsIgnoreLine
 class NotFound extends Response
 {
     public $code = 404;
 }
 
+// @codingStandardsIgnoreLine
 class Created extends Response
 {
     public $code = 201;
@@ -64,6 +69,7 @@ class Created extends Response
     }
 }
 
+// @codingStandardsIgnoreLine
 class NoContent extends Response
 {
     public $code = 204;
