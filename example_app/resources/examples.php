@@ -5,6 +5,7 @@ namespace Sunnyexample\Resources;
 use Sunnyvale\REST\Request;
 use Sunnyvale\REST\Resource;
 use Sunnyvale\REST\Response;
+use Sunnyvale\REST\Exceptions;
 
 class Examples extends Resource
 {
@@ -15,6 +16,10 @@ class Examples extends Resource
 
     public function delete(Request $request): Response\NoContent
     {
+        if (!isset($request->resourceId)) {
+            throw new Exceptions\Resource\Verb\NotSupported("DELETE");
+        }
+
         $this->db->delete($request->resourceId);
         return new Response\NoContent();
     }

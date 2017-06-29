@@ -1,11 +1,10 @@
 <?php
 
-require_once "lib/rest_client.php";
-require_once "lib/traits.php";
+namespace Sunnyexample\TEST;
 
 use PHPUnit\Framework\TestCase;
 
-final class Resource_Example_Items_Test extends TestCase
+final class ResourceExampleItemsTest extends TestCase
 {
     use provider;
 
@@ -67,6 +66,6 @@ final class Resource_Example_Items_Test extends TestCase
 
     public static function tearDownAfterClass()
     {
-        unlink("data/services.db");
+        unlink("storage/services.db");
     }
 }

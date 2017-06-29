@@ -1,15 +1,11 @@
 <?php
 
-require_once "core/exceptions.php";
-require_once "database.php";
-require_once "lib/traits.php";
+namespace Sunnyexample\TEST;
 
 use PHPUnit\Framework\TestCase;
+use Sunnyexample\Database;
 
-/**
- * @covers Example
- */
-final class Database_Example_Test extends TestCase
+final class DatabaseExampleTest extends TestCase
 {
     use provider;
 
@@ -53,7 +49,7 @@ final class Database_Example_Test extends TestCase
 
     /**
      * @dataProvider examples
-     * @expectedException Exception\Resource\NotFound
+     * @expectedException \DomainException
      */
     public function testDelete($example)
     {
@@ -76,7 +72,7 @@ final class Database_Example_Test extends TestCase
 
     /**
      * @dataProvider faultyExamples
-     * @expectedException Exception\Database\MissingKey
+     * @expectedException \InvalidArgumentException
      */
     public function testInsertFaultyData($example)
     {
@@ -85,6 +81,6 @@ final class Database_Example_Test extends TestCase
 
     public static function tearDownAfterClass()
     {
-        unlink("data/services.db");
+        unlink("storage/services.db");
     }
 }

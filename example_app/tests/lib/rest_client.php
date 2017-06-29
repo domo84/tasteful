@@ -1,5 +1,7 @@
 <?php
 
+namespace Sunnyexample\TEST;
+
 class Rest_Client
 {
     private $curl_client = null;

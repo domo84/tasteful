@@ -1,0 +1,18 @@
+{
+    "name": "domolicious/services",
+    "description": "Tasteful REST Server",
+    "license": "MIT",
+    "keywords": ["php", "rest"],
+    "authors": [
+        {
+            "name": "Magnus Hellman"
+        }
+    ],
+    "require": {},
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Sunnyvale\\REST\\": "src"
+        }
+    }
+}

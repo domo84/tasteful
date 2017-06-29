@@ -17,6 +17,9 @@ class Server
 
     public function run()
     {
+        $response = null;
+        $is_success = false;
+
         try {
             $request = new Request($this->server);
 
@@ -24,7 +27,7 @@ class Server
                 $response = new Response\JSON($this->standardResponse);
             } else {
                 if (!isset($this->resources[$request->path])) {
-                    throw new Exceptions\Resource\NotFound($request->resource);
+                    throw new \DomainException($request->resource);
                 }
 
                 $class = $this->resources[$request->path];
@@ -38,28 +41,33 @@ class Server
                 $response = $resource->run();
             }
 
-            $this->response = $response;
-            return $response;
-        } catch (\Exception\Resource\NotFound $e) {
+            $is_success = true;
+        } catch (\DomainException $e) {
             http_response_code(404);
             error_log(sprintf("The resource '%s' you are looking for does not exist", $e->getMessage()));
-        } catch (\Exception\Resource\Verb\NotSupported $e) {
+        } catch (Exceptions\Resource\Verb\NotSupported $e) {
             http_response_code(501);
             error_log(sprintf("The HTTP verb '%s' is not supported", $e->getMessage()));
-        } catch (\Exception\Resource\Verb\NotImplemented $e) {
+        } catch (Exceptions\Resource\Verb\NotImplemented $e) {
             http_response_code(501);
             error_log(sprintf("The HTTP verb '%s' is not yet implemeneted for this resource", $e->getMessage()));
-        } catch (\Exception\Subresource\NotFound $e) {
+        } catch (Exceptions\Subresource\NotFound $e) {
             http_response_code(404);
             error_log(sprintf("The subresource '%s' you are looking for does not exists", $e->getMessage()));
-        } catch (\Exception\Database\MissingKey $e) {
+        } catch (\InvalidArgumentException $e) {
             http_response_code(422);
             error_log(sprintf("Client sent faulty data: %s", $e->getMessage()));
         }
+
+        $this->response = $response;
+
+        return $is_success;
     }
 
     public function output()
     {
+        $response = $this->response;
+
         foreach ($response->headers as $header) {
             header($header);
         }

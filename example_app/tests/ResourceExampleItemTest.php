@@ -1,11 +1,10 @@
 <?php
 
-require_once "lib/rest_client.php";
-require_once "lib/traits.php";
+namespace Sunnyexample\TEST;
 
 use PHPUnit\Framework\TestCase;
 
-final class Resource_Example_Item_Test extends TestCase
+final class ResourceExampleItemTest extends TestCase
 {
     use provider;
 
@@ -16,6 +15,9 @@ final class Resource_Example_Item_Test extends TestCase
         $this->rest_client = new Rest_Client();
     }
 
+    /**
+     * Only for setting up test data
+     */
     public function testInsert()
     {
         $values = ["_id" => 1, "name" => "Name#1", "content" => "Content#1"];
@@ -24,7 +26,6 @@ final class Resource_Example_Item_Test extends TestCase
     }
 
     /**
-     * Only for setting up data
      * @dataProvider items
      */
     public function testInsertItems($item)
@@ -61,14 +62,14 @@ final class Resource_Example_Item_Test extends TestCase
      */
     public function testPutNonExistent($item)
     {
-        list($result, $code) = $this->rest_client->put("example/1/items/911", $item);
+        list($result, $code) = $this->rest_client->put("examples/1/items/911", $item);
         $this->assertNull($result);
         $this->assertEquals(404, $code);
     }
 
     public function testDeleteNonExistent()
     {
-        list($result, $code) = $this->rest_client->delete("example/1/items/100");
+        list($result, $code) = $this->rest_client->delete("examples/1/items/100");
         $this->assertNull($result);
         $this->assertEquals(204, $code);
     }
@@ -84,9 +85,8 @@ final class Resource_Example_Item_Test extends TestCase
         $this->assertEquals(404, $code);
     }
 
-
     public static function tearDownAfterClass()
     {
-        unlink("data/services.db");
+        unlink("storage/services.db");
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+namespace Sunnyexample\TEST;
+
 trait provider
 {
     public function examples()
