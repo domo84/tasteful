@@ -2,6 +2,8 @@
 
 namespace Sunnyexample;
 
+use Sunnyvale\REST\Exceptions\NotFound;
+
 abstract class Database extends \SQLite3
 {
     public function __construct()
@@ -27,7 +29,7 @@ abstract class Database extends \SQLite3
             return $row;
         }
 
-        throw new \DomainException("Resource not found");
+        throw new NotFound("Resource not found");
     }
 
     public function assert($expected, $actual)

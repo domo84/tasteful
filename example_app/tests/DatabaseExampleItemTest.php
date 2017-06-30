@@ -49,7 +49,7 @@ final class DatabaseExampleItemTest extends TestCase
 
     /**
      * @dataProvider items
-     * @expectedException \DomainException
+     * @expectedException \Sunnyvale\REST\Exceptions\NotFound
      */
     public function testDelete($item)
     {

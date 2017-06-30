@@ -5,8 +5,8 @@ require_once "../psr4-autoloader.php";
 
 # due to inline classes not getting autoloaded
 # cba to have a file per so small classes
-require_once "../../src/exceptions.php";
-require_once "../../src/response.php";
+# require_once "../../src/exceptions.php";
+# require_once "../../src/response.php";
 
 $loader = new Sunnyvale\Psr4AutoloaderClass();
 $loader->register();
@@ -23,6 +23,5 @@ $server->resources = [
     "examples/items" => "\Sunnyexample\Resources\Example_Items"
 ];
 
-if ($server->run()) {
-    $server->output();
-}
+$result = $server->run();
+$server->output();

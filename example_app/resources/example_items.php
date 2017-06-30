@@ -17,7 +17,7 @@ class Example_Items extends Resource
     public function delete(Request $request): Response\NoContent
     {
         if (!isset($request->subresourceId)) {
-            throw new Exceptions\Resource\Verb\NotSupported("DELETE");
+            throw new Exceptions\NotSupported("DELETE");
         }
 
         $this->db->delete($request->subresourceId);
