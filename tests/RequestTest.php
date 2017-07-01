@@ -5,6 +5,9 @@ namespace Sunnyvale\TEST;
 use PHPUnit\Framework\TestCase;
 use Sunnyvale\REST\Request;
 
+/**
+ * @covers \Sunnyvale\REST\Request
+ */
 final class RequestTest extends TestCase
 {
     /**
@@ -79,11 +82,25 @@ final class RequestTest extends TestCase
             "body" => null
         ];
 
+        $server5 = [
+            "REQUEST_METHOD" => "OPTIONS",
+            "REQUEST_URI" => "/examples"
+        ];
+
+        $expected5 = [
+            "method" => "OPTIONS",
+            "path" => "examples",
+            "resource" => "examples",
+            "resourceId" => null,
+            "body" => null
+        ];
+
         return [
             [$server1, $expected1],
             [$server2, $expected2],
             [$server3, $expected3],
-            [$server4, $expected4]
+            [$server4, $expected4],
+            [$server5, $expected5]
         ];
     }
 }

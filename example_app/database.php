@@ -3,6 +3,7 @@
 namespace Sunnyexample;
 
 use Sunnyvale\REST\Exceptions\NotFound;
+use Sunnyvale\REST\Exceptions\MissingParameter;
 
 abstract class Database extends \SQLite3
 {
@@ -39,7 +40,7 @@ abstract class Database extends \SQLite3
                 continue;
             }
 
-            throw new \InvalidArgumentException("Missing required key: $key");
+            throw new MissingParameter("Required key: $key");
         }
     }
 }

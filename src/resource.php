@@ -2,7 +2,8 @@
 
 namespace Sunnyvale\REST;
 
-use Sunnyvale\REST\Exceptions\Resource\Verb\NotImplemented as NotImplemented;
+use Sunnyvale\REST\Exceptions\NotImplemented as NotImplemented;
+use Sunnyvale\REST\Exceptions\NotSupported as NotSupported;
 
 abstract class Resource
 {
@@ -39,6 +40,6 @@ abstract class Resource
             return $this->$method($this->request);
         }
 
-        throw new Sunnyvale\REST\Exceptions\Resource\Verb\NotSupported($method);
+        throw new NotSupported($method);
     }
 }

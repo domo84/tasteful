@@ -5,8 +5,8 @@ namespace Sunnyvale\REST;
 class Server
 {
     private $server = null;
-    private $response = null;
 
+    public $response = null;
     public $resources = array();
     public $standardResponse = array("name" => "Sunnyvale API", "version" => 1);
 
@@ -15,53 +15,53 @@ class Server
         $this->server = $server;
     }
 
+    /**
+     * @return Response
+     */
     public function run()
     {
-        $response = null;
-        $is_success = false;
-
         try {
             $request = new Request($this->server);
 
             if ($request->resource == null) {
-                $response = new Response\JSON($this->standardResponse);
-            } else {
-                if (!isset($this->resources[$request->path])) {
-                    throw new \DomainException($request->resource);
-                }
-
-                $class = $this->resources[$request->path];
-
-                if (!class_exists($class)) {
-                    throw new Exceptions\Resource\NotImplemented($class);
-                }
-
-                $resource = new $class();
-                $resource->request = $request;
-                $response = $resource->run();
+                $this->response = new Response\JSON($this->standardResponse);
+                return $this->response;
+            }
+           
+            if (!isset($this->resources[$request->path])) {
+                $this->response = new Response\NotFound();
+                return $this->response;
             }
 
-            $is_success = true;
-        } catch (\DomainException $e) {
-            http_response_code(404);
-            error_log(sprintf("The resource '%s' you are looking for does not exist", $e->getMessage()));
-        } catch (Exceptions\Resource\Verb\NotSupported $e) {
-            http_response_code(501);
-            error_log(sprintf("The HTTP verb '%s' is not supported", $e->getMessage()));
-        } catch (Exceptions\Resource\Verb\NotImplemented $e) {
-            http_response_code(501);
-            error_log(sprintf("The HTTP verb '%s' is not yet implemeneted for this resource", $e->getMessage()));
-        } catch (Exceptions\Subresource\NotFound $e) {
-            http_response_code(404);
-            error_log(sprintf("The subresource '%s' you are looking for does not exists", $e->getMessage()));
-        } catch (\InvalidArgumentException $e) {
-            http_response_code(422);
-            error_log(sprintf("Client sent faulty data: %s", $e->getMessage()));
+            $class = $this->resources[$request->path];
+
+            if (!class_exists($class)) {
+                $this->response = new Response\NotImplemented();
+                return $this->response;
+            }
+
+            $resource = new $class();
+            $resource->request = $request;
+            $this->response = $resource->run();
+        } catch (Exceptions\NotFound $e) {
+            $this->response = new Response\NotFound();
+            // http_response_code(404);
+            // error_log(sprintf("The resource '%s' you are looking for does not exist", $e->getMessage()));
+        } catch (Exceptions\NotSupported $e) {
+            $this->response = new Response\NotImplemented();
+            // http_response_code(501);
+            // error_log(sprintf("The HTTP verb '%s' is not supported", $e->getMessage()));
+        } catch (Exceptions\NotImplemented $e) {
+            $this->response = new Response\NotImplemented();
+            // http_response_code(501);
+            // error_log(sprintf("The HTTP verb '%s' is not implemeneted for this resource", $e->getMessage()));
+        } catch (Exceptions\MissingParameter $e) {
+            $this->response = new Response\UnprocessableEntity();
+            // http_response_code(422);
+            // error_log(sprintf("Client sent faulty data: %s", $e->getMessage()));
         }
 
-        $this->response = $response;
-
-        return $is_success;
+        return $this->response;
     }
 
     public function output()

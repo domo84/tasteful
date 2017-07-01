@@ -72,7 +72,7 @@ final class DatabaseExampleItemTest extends TestCase
 
     /**
      * @dataProvider faultyItems
-     * @expectedException \InvalidArgumentException
+     * @expectedException \Sunnyvale\REST\Exceptions\MissingParameter
      */
     public function testInsertFaultyData($item)
     {

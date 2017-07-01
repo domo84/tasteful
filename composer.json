@@ -9,7 +9,9 @@
         }
     ],
     "require": {},
-    "require-dev": {},
+    "require-dev": {
+        "phpunit/php-code-coverage": "^5.2"
+    },
     "autoload": {
         "psr-4": {
             "Sunnyvale\\REST\\": "src"

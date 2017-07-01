@@ -3,40 +3,18 @@
 namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
+
 use Sunnyvale\REST\Resource;
 use Sunnyvale\REST\Request;
 use Sunnyvale\REST\Response;
 
-final class Examples extends Resource
-{
-    public function delete(Request $request): Response\NoContent
-    {
-        return new Response\NoContent();
-    }
+use Sunnyvale\TEST\Resources\Examples;
+use Sunnyvale\TEST\Resources\Articles;
 
-    public function get(Request $request): Response\JSON
-    {
-        return new Response\JSON(array("some" => "thing"));
-    }
-
-    public function post(Request $request): Response\JSON
-    {
-        return new Response\JSON(array("some" => "thing"));
-    }
-
-    public function put(Request $request): Response\JSON
-    {
-        return new Response\JSON(array("some" => "thing"));
-    }
-}
-
-// @codingStandardsIgnoreLine
-final class Articles extends Resource
-{
-}
-
-// @codingStandardsIgnoreLine
-final class Resource_Test extends TestCase
+/**
+ * @covers \Sunnyvale\REST\Resource
+ */
+final class ResourceTest extends TestCase
 {
     /**
      * @dataProvider okProvider
@@ -48,11 +26,22 @@ final class Resource_Test extends TestCase
     }
 
     /**
-     * @expectedException Sunnyvale\REST\Exceptions\Resource\Verb\NotImplemented
+     * @expectedException Sunnyvale\REST\Exceptions\NotImplemented
      * @dataProvider notImplementedProvider
      */
     public function testRunNonImplementedMethods($res)
     {
+        $res->run();
+    }
+
+    /**
+     * @expectedException Sunnyvale\REST\Exceptions\NotSupported
+     */
+    public function testNotSupported()
+    {
+        $req = new Request(["REQUEST_METHOD" => "COMPLETELY_WHIPE_EVERYTHING", "REQUEST_URI" => "/examples/10"]);
+        $res = new Examples();
+        $res->request = $req;
         $res->run();
     }
 
@@ -95,11 +84,16 @@ final class Resource_Test extends TestCase
         $res4 = new Examples();
         $res4->request = $req4;
 
+        $req5 = new Request(["REQUEST_METHOD" => "OPTIONS", "REQUEST_URI" => "/examples/10"]);
+        $res5 = new Examples();
+        $res5->request = $req5;
+
         return [
             [$res1, Response\JSON::class],
             [$res2, Response\NoContent::class],
             [$res3, Response\JSON::class],
-            [$res4, Response\JSON::class]
+            [$res4, Response\JSON::class],
+            [$res5, Response\Options::class]
         ];
     }
 }

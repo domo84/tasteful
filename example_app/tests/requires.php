@@ -17,6 +17,7 @@ require_once "../src/server.php";
 require_once "../src/exceptions/notfound.php";
 require_once "../src/exceptions/notimplemented.php";
 require_once "../src/exceptions/notsupported.php";
+require_once "../src/exceptions/missingparameter.php";
 
 require_once "tests/lib/traits.php";
 require_once "tests/lib/rest_client.php";

@@ -5,20 +5,14 @@ namespace Sunnyvale\TEST;
 use PHPUnit\Framework\TestCase;
 use Sunnyvale\REST\Server;
 use Sunnyvale\REST\Response;
-use Sunnyvale\REST\Resource;
 use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Exceptions\Resource\NotFound;
-use Sunnyvale\REST\Exceptions\Resource\NotImplemented;
+use Sunnyvale\REST\Resource;
 
-final class Users extends Resource
-{
-    public function get(Request $request): Response\JSON
-    {
-        return new Response\JSON(array(array("name" => "Sungam")));
-    }
-}
+use Sunnyvale\TEST\Resources\Users;
 
-// @codingStandardsIgnoreLine
+/**
+ * @covers \Sunnyvale\REST\Server
+ */
 final class ServerTest extends TestCase
 {
     public function testIndex()
@@ -30,38 +24,87 @@ final class ServerTest extends TestCase
 
     public function testNotFound()
     {
-        $this->expectException(NotFound::class);
         $server = new Server(["REQUEST_METHOD" => "DELETE", "REQUEST_URI" => "/examples"]);
         $server->run();
+        $result = $server->run();
+        $this->assertInstanceOf(Response\NotFound::class, $result);
     }
 
+    /**
+     * Testing registered but not implemented handler
+     */
     public function testNotImplemented()
     {
-        $this->expectException(NotImplemented::class);
-        $server = new Server(["REQUEST_METHOD" => "DELETE", "REQUEST_URI" => "/examples"]);
+        $server = new Server(["REQUEST_METHOD" => "POST", "REQUEST_URI" => "/examples"]);
         $server->resources = [
-            "examples" => "\Sunnyexample\Resources\Examples"
+            "examples" => "\Sunnyvale\TEST\Resources\DoesNotExists"
         ];
-        $server->run();
+        $result = $server->run();
+        $this->assertInstanceOf(Response\NotImplemented::class, $result);
     }
 
     public function testFound()
     {
-        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => "/users"]);
+        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => "/examples"]);
         $server->resources = [
-            "users" => "\Sunnyvale\TEST\Users"
+            "examples" => "\Sunnyvale\TEST\Resources\Examples"
         ];
         $result = $server->run();
-        $this->assertTrue(is_object($result));
+        $this->assertInstanceOf(Response\JSON::class, $result);
     }
 
     public function testFoundButNotImplemented()
     {
-        $this->expectException(NotImplemented::class);
+        $server = new Server(["REQUEST_METHOD" => "POST", "REQUEST_URI" => "/articles"]);
+        $server->resources = [
+            "articles" => "\Sunnyvale\TEST\Resources\Articles"
+        ];
+        $result = $server->run();
+        $this->assertInstanceOf(Response\NotImplemented::class, $result);
+    }
+
+    public function testNotSupported()
+    {
+        $server = new Server(["REQUEST_METHOD" => "WHIPE", "REQUEST_URI" => "/users"]);
+        $server->resources = [
+            "users" => "\Sunnyvale\TEST\Resources\Users"
+        ];
+        $result = $server->run();
+        $this->assertInstanceOf(Response\NotImplemented::class, $result);
+    }
+
+    public function testSpecificResourceNotFound()
+    {
+        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => "/users/10"]);
+        $server->resources = [
+            "users" => "\Sunnyvale\TEST\Resources\Users"
+        ];
+        $result = $server->run();
+        $this->assertInstanceOf(Response\NotFound::class, $result);
+    }
+
+    public function testUnprocessableEntity()
+    {
         $server = new Server(["REQUEST_METHOD" => "POST", "REQUEST_URI" => "/users"]);
         $server->resources = [
-            "users" => "Users"
+            "users" => "\Sunnyvale\TEST\Resources\Users"
         ];
-        $server->run();
+        $result = $server->run();
+        $this->assertInstanceOf(Response\UnprocessableEntity::class, $result);
+    }
+
+    /**
+     * @runInSeparateProcess
+     */
+    public function testOutput()
+    {
+        $expected = '{"some":"thing"}' . "\n\r\n";
+        $this->expectOutputString($expected);
+        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => "/examples"]);
+        $server->resources = [
+            "examples" => "\Sunnyvale\TEST\Resources\Examples"
+        ];
+        $result = $server->run();
+        $server->output();
     }
 }
