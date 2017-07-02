@@ -33,6 +33,7 @@ class Examples extends Resource
 
     public function post(Request $request): Response\JSON
     {
+        error_log("DE TUCK");
         $id = $this->db->insert($request->body);
         $content = $this->db->one($id);
         return new Response\JSON($content);

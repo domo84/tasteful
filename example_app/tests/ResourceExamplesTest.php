@@ -104,6 +104,6 @@ final class ResourceExamplesTest extends TestCase
 
     public static function tearDownAfterClass()
     {
-        unlink("storage/services.db");
+        // unlink(__DIR__ . "../storage/services.db");
     }
 }
