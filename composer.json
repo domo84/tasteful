@@ -1,5 +1,5 @@
 {
-    "name": "TASTEful",
+    "name": "domolicious/tasteful",
     "description": "Tasteful REST Server",
     "license": "MIT",
     "keywords": ["php", "rest"],
