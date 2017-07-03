@@ -9,7 +9,11 @@ Base for RESTful web services
 Take a look at the `example_app` for an implementation. But in essence this is what you would need.
 
 ```php
+<?php /* index.php */
+
 namespace Sunnyexample\Resources;
+
+require "vendor/autoload.php";
 
 class Examples extends \Sunnyvale\REST\Resource
 {
@@ -21,7 +25,7 @@ class Examples extends \Sunnyvale\REST\Resource
 
 class Example_Items extends \Sunnyvale\REST\Resource
 {
-    /** etc **/
+    /* public function delete,get,post,put */
 }
 
 $server = new \Sunnyvale\REST\Server($_SERVER);
@@ -31,4 +35,11 @@ $server->resources = [
 ];
 $server->run();
 $server->output();
+```
+
+Start a web server `php -S localhost:8080` and 
+
+```bash
+curl localhost:8080/examples
+[{"title": "example#1"}]
 ```
