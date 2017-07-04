@@ -8,7 +8,8 @@ class Server
 
     public $response = null;
     public $resources = array();
-    public $standardResponse = array("name" => "Sunnyvale API", "version" => 1);
+    public $name = "Sunnyvale API";
+    public $version = 1;
 
     public function __construct($server)
     {
@@ -24,7 +25,8 @@ class Server
             $request = new Request($this->server);
 
             if ($request->resource == null) {
-                $this->response = new Response\JSON($this->standardResponse);
+                $standard = array("name" => $this->name, "version" => $this->version);
+                $this->response = new Response\JSON($standard);
                 return $this->response;
             }
            
