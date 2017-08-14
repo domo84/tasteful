@@ -17,13 +17,11 @@ class JSON extends Response
 
     private function isJSON($content)
     {
-        if (is_array($content)) {
-            return false;
-        }
-
-        $pos = strpos($content, "{");
-        if ($pos === 0 || $pos === 1) {
-            return true;
+        if (is_string($content)) {
+            $pos = strpos($content, "{");
+            if ($pos === 0 || $pos === 1) {
+                return true;
+            }
         }
 
         return false;
