@@ -8,6 +8,7 @@ require_once "src/Response/Options.php";
 require_once "src/Response/Conflict.php";
 require_once "src/Response/Created.php";
 require_once "src/Response/NotImplemented.php";
+require_once "src/Response/Unauthorized.php";
 require_once "src/Response/UnprocessableEntity.php";
 
 require_once "src/Request.php";

@@ -93,6 +93,24 @@ final class ServerTest extends TestCase
         $this->assertInstanceOf(Response\UnprocessableEntity::class, $result);
     }
 
+    public function testAuthorizationSuccess()
+    {
+        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => "", "HTTP_AUTHORIZATION" => "token 123"]);
+        $server->authorization = true;
+        $result = $server->run();
+        $this->assertEquals("123", $server->token);
+        $this->assertInstanceOf(Response\JSON::class, $result);
+    }
+
+    public function testAuthorizationFail()
+    {
+        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => ""]);
+        $server->authorization = true;
+        $result = $server->run();
+        $this->assertNull($server->token);
+        $this->assertInstanceOf(Response\Unauthorized::class, $result);
+    }
+
     /**
      * @runInSeparateProcess
      */

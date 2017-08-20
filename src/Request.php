@@ -18,6 +18,10 @@ class Request
         $uri = $server["REQUEST_URI"];
         $this->parseRequestUri($uri);
         $this->body = json_decode(file_get_contents("php://input"), true);
+
+        if (isset($server["HTTP_AUTHORIZATION"])) {
+            $this->authorization = $server["HTTP_AUTHORIZATION"];
+        }
     }
 
     private function parseRequestUri($uri)

@@ -10,6 +10,8 @@ class Server
     public $resources = array();
     public $name = "Sunnyvale API";
     public $version = 1;
+    public $authorization = false;
+    public $token = null;
 
     public function __construct($server)
     {
@@ -23,6 +25,15 @@ class Server
     {
         try {
             $request = new Request($this->server);
+
+            if ($this->authorization && $request->method !== "OPTIONS") {
+                if (isset($request->authorization)) {
+                    $this->token = str_replace("token ", "", $request->authorization);
+                } else {
+                    $this->response = new Response\Unauthorized();
+                    return $this->response;
+                }
+            }
 
             if ($request->resource == null) {
                 $standard = array("name" => $this->name, "version" => $this->version);
