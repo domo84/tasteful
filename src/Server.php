@@ -11,11 +11,12 @@ class Server
     public $name = "Sunnyvale API";
     public $version = 1;
     public $authorization = false;
-    public $token = null;
+    public $request;
 
     public function __construct($server)
     {
         $this->server = $server;
+        $this->request = new Request($server);
     }
 
     /**
@@ -23,13 +24,11 @@ class Server
      */
     public function run()
     {
-        try {
-            $request = new Request($this->server);
+        $request = $this->request;
 
+        try {
             if ($this->authorization && $request->method !== "OPTIONS") {
-                if (isset($request->authorization)) {
-                    $this->token = str_replace("token ", "", $request->authorization);
-                } else {
+                if (!$request->token) {
                     $this->response = new Response\Unauthorized();
                     return $this->response;
                 }

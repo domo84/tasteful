@@ -97,8 +97,8 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => "", "HTTP_AUTHORIZATION" => "token 123"]);
         $server->authorization = true;
+        $this->assertEquals("123", $server->request->token);
         $result = $server->run();
-        $this->assertEquals("123", $server->token);
         $this->assertInstanceOf(Response\JSON::class, $result);
     }
 
@@ -106,8 +106,8 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => ""]);
         $server->authorization = true;
+        $this->assertNull($server->request->token);
         $result = $server->run();
-        $this->assertNull($server->token);
         $this->assertInstanceOf(Response\Unauthorized::class, $result);
     }
 

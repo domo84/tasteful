@@ -11,6 +11,7 @@ class Request
     public $subresource = null;
     public $subresourceId = null;
     public $body = null;
+    public $token = null;
 
     public function __construct($server)
     {
@@ -20,7 +21,7 @@ class Request
         $this->body = json_decode(file_get_contents("php://input"), true);
 
         if (isset($server["HTTP_AUTHORIZATION"])) {
-            $this->authorization = $server["HTTP_AUTHORIZATION"];
+            $this->token = str_replace("token ", "", $server["HTTP_AUTHORIZATION"]);
         }
     }
 
