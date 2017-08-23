@@ -12,6 +12,7 @@ class Request
     public $subresourceId = null;
     public $body = null;
     public $token = null;
+    public $params = array();
 
     public function __construct($server)
     {
@@ -23,11 +24,14 @@ class Request
         if (isset($server["HTTP_AUTHORIZATION"])) {
             $this->token = str_replace("token ", "", $server["HTTP_AUTHORIZATION"]);
         }
+
+        $this->params = $_GET;
     }
 
     private function parseRequestUri($uri)
     {
-        $parts = explode("/", $uri);
+        $path = preg_replace('/\?.*/', '', $uri);
+        $parts = explode("/", $path);
         array_shift($parts); // remove first empty part, becooz
 
         for ($i = 0; $i < count($parts); $i++) {
