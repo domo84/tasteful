@@ -1,10 +1,8 @@
+dist: precise
 language: php
-
 php:
   7.0
-
 before_script:
   - composer self-update
   - composer install --prefer-source --no-interaction
-
 script: phpunit --bootstrap tests/autoload.php tests
