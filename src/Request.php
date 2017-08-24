@@ -19,13 +19,22 @@ class Request
         $this->method = $server["REQUEST_METHOD"];
         $uri = $server["REQUEST_URI"];
         $this->parseRequestUri($uri);
-        $this->body = json_decode(file_get_contents("php://input"), true);
 
         if (isset($server["HTTP_AUTHORIZATION"])) {
             $this->token = str_replace("token ", "", $server["HTTP_AUTHORIZATION"]);
         }
 
-        $this->params = $_GET;
+        if (isset($server["_BODY"])) {
+            $this->body = json_decode($server["_BODY"], true);
+        } else {
+            $this->body = json_decode(file_get_contents("php://input"), true);
+        }
+
+        if (isset($server["_GET"])) {
+            $this->params = $server["_GET"];
+        } else {
+            $this->params = $_GET;
+        }
     }
 
     private function parseRequestUri($uri)
