@@ -21,6 +21,7 @@ final class RequestTest extends TestCase
         $this->assertEquals($expected["resourceId"], $request->resourceId);
         $this->assertEquals($expected["body"], $request->body);
         $this->assertEquals($expected["params"], $request->params);
+        $this->assertEquals($expected["token"], $request->token);
     }
 
     /**
@@ -39,7 +40,8 @@ final class RequestTest extends TestCase
             "resource" => "examples",
             "resourceId" => null,
             "body" => null,
-            "params" => array()
+            "params" => array(),
+            "token" => null
         ];
 
         $server2 = [
@@ -53,7 +55,8 @@ final class RequestTest extends TestCase
             "resource" => "examples",
             "resourceId" => 10,
             "body" => null,
-            "params" => array()
+            "params" => array(),
+            "token" => null
         ];
 
         $server3 = [
@@ -69,7 +72,8 @@ final class RequestTest extends TestCase
             "resourceId" => 10,
             "subresource" => "items",
             "body" => ["name" => "Name#1", "email" => "mail@example.com"],
-            "params" => array()
+            "params" => array(),
+            "token" => null
         ];
 
         $server4 = [
@@ -85,7 +89,8 @@ final class RequestTest extends TestCase
             "subresource" => "items",
             "subresourceId" => 4,
             "body" => null,
-            "params" => array()
+            "params" => array(),
+            "token" => null
         ];
 
         $server5 = [
@@ -99,7 +104,8 @@ final class RequestTest extends TestCase
             "resource" => "examples",
             "resourceId" => null,
             "body" => null,
-            "params" => array()
+            "params" => array(),
+            "token" => null
         ];
 
         $server6 = [
@@ -114,7 +120,24 @@ final class RequestTest extends TestCase
             "resource" => "examples",
             "resourceId" => null,
             "body" => null,
-            "params" => ["q" => "tomatoes"]
+            "params" => ["q" => "tomatoes"],
+            "token" => null
+        ];
+
+        $server7 = [
+            "REQUEST_METHOD" => "GET",
+            "REQUEST_URI" => "/examples",
+            "HTTP_AUTHORIZATION" => "token 123"
+        ];
+
+        $expected7 = [
+            "method" => "GET",
+            "path" => "examples",
+            "resource" => "examples",
+            "resourceId" => null,
+            "body" => null,
+            "params" => array(),
+            "token" => "123"
         ];
 
         return [
@@ -123,7 +146,8 @@ final class RequestTest extends TestCase
             [$server3, $expected3],
             [$server4, $expected4],
             [$server5, $expected5],
-            [$server6, $expected6]
+            [$server6, $expected6],
+            [$server7, $expected7]
         ];
     }
 }
