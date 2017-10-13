@@ -2,7 +2,7 @@
 
 Base for RESTful web services
 
-[![Build Status](https://travis-ci.org/domolicious/services.svg?branch=master)](https://travis-ci.org/domolicious/services)
+[![Build Status](https://travis-ci.org/domolicious/tasteful.svg?branch=master)](https://travis-ci.org/domolicious/tasteful)
 
 ## Usage
 
