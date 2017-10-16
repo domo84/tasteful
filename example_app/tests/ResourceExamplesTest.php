@@ -64,7 +64,7 @@ final class ResourceExamplesTest extends TestCase
      */
     public function testPut($example)
     {
-        $id = $example["_id"];
+        $id = $example["id"];
         list($result, $code) = $this->rest_client->put("examples/$id", $example);
         $this->assertEquals($example, $result);
         $this->assertEquals(200, $code);
@@ -75,7 +75,7 @@ final class ResourceExamplesTest extends TestCase
      */
     public function testDelete($example)
     {
-        $id = $example["_id"];
+        $id = $example["id"];
         list($result, $code) = $this->rest_client->delete("examples/$id");
         $this->assertNull($result);
         $this->assertEquals(204, $code);
@@ -102,8 +102,11 @@ final class ResourceExamplesTest extends TestCase
         $this->assertEquals(0, count($result));
     }
 
-    public static function tearDownAfterClass()
+    public function tearDown()
     {
-        // unlink(__DIR__ . "../storage/services.db");
+        $path = __DIR__ . "/../storage/services.db";
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

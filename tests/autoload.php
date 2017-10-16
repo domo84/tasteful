@@ -20,4 +20,6 @@ require_once "src/Exceptions/NotImplemented.php";
 require_once "src/Exceptions/NotSupported.php";
 require_once "src/Exceptions/MissingParameter.php";
 
+require_once "src/Interfaces/Resource.php";
+
 require_once "tests/lib/resources.php";

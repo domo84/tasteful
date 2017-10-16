@@ -1,19 +1,21 @@
 <?php
 
-namespace Sunnyexample\TEST;
+namespace Sunnyexample\TEST\Database;
 
 use PHPUnit\Framework\TestCase;
-use Sunnyexample\Database;
+use Sunnyexample\Database\Example as DB;
 
-final class DatabaseExampleTest extends TestCase
+use Sunnyexample\TEST\Traits\Provider;
+
+final class ExampleTest extends TestCase
 {
-    use provider;
+    use Provider;
 
     private $db = null;
 
     public function setUp()
     {
-        $this->db = new Database\Example();
+        $this->db = new DB;
     }
 
     /**
@@ -23,7 +25,7 @@ final class DatabaseExampleTest extends TestCase
     {
         $id = $this->db->insert($example);
         $this->assertTrue(is_int($id));
-        $this->assertEquals($example["_id"], $id);
+        $this->assertEquals($example["id"], $id);
     }
 
     /**
@@ -32,7 +34,7 @@ final class DatabaseExampleTest extends TestCase
      */
     public function testOne($example)
     {
-        $result = $this->db->one($example["_id"]);
+        $result = $this->db->one($example["id"]);
         $this->assertTrue(is_array($result));
         $this->assertEquals($example, $result);
     }
@@ -64,7 +66,7 @@ final class DatabaseExampleTest extends TestCase
      */
     public function testUpdate($example)
     {
-        $id = $example["_id"];
+        $id = $example["id"];
         $this->db->update($id, $example);
         $result = $this->db->one($id);
         $this->assertEquals($example, $result);
@@ -81,6 +83,9 @@ final class DatabaseExampleTest extends TestCase
 
     public static function tearDownAfterClass()
     {
-        unlink("storage/services.db");
+        $path = __DIR__ . "/../../storage/services.db";
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

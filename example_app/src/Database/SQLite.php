@@ -1,18 +1,18 @@
 <?php
 
-namespace Sunnyexample;
+namespace Sunnyexample\Database;
 
 use Sunnyvale\REST\Exceptions\NotFound;
 use Sunnyvale\REST\Exceptions\MissingParameter;
 
-abstract class Database extends \SQLite3
+abstract class SQLite extends \SQLite3
 {
     public function __construct()
     {
-        $this->open(__DIR__ . "/storage/services.db");
+        $this->open(__DIR__ . "/../../storage/services.db");
 
-        $this->query("CREATE TABLE IF NOT EXISTS example (_id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, content TEXT)");
-        $this->query("CREATE TABLE IF NOT EXISTS example_item (_id INTEGER PRIMARY KEY AUTOINCREMENT, example_id INTEGER, name TEXT)");
+        $this->query("CREATE TABLE IF NOT EXISTS example (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, content TEXT)");
+        $this->query("CREATE TABLE IF NOT EXISTS example_item (id INTEGER PRIMARY KEY AUTOINCREMENT, example_id INTEGER, name TEXT)");
     }
 
     public static function associate($result)

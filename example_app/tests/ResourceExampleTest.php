@@ -27,11 +27,12 @@ final class ResourceExampleTest extends TestCase
     }
 
     /**
+     * @depends testPut
      * @dataProvider examples
      */
     public function testGetOne($example)
     {
-        $id = $example["_id"];
+        $id = $example["id"];
         list($result, $code) = $this->rest_client->get("examples/$id");
         $this->assertEquals($example, $result);
         $this->assertEquals(200, $code);
@@ -42,7 +43,7 @@ final class ResourceExampleTest extends TestCase
      */
     public function testPut($example)
     {
-        $id = $example["_id"];
+        $id = $example["id"];
         list($result, $code) = $this->rest_client->put("examples/$id", $example);
         $this->assertEquals($example, $result);
         $this->assertEquals(200, $code);
@@ -70,14 +71,17 @@ final class ResourceExampleTest extends TestCase
      */
     public function testNotFound($example)
     {
-        $id = $example["_id"];
+        $id = $example["id"];
         list($result, $code) = $this->rest_client->get("examples/$id");
         $this->assertNull($result);
         $this->assertEquals(404, $code);
     }
 
-    public static function tearDownAfterClass()
+    public function tearDown()
     {
-        unlink("storage/services.db");
+        $path = __DIR__ . "/../storage/services.db";
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

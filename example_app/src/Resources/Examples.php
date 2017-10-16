@@ -7,14 +7,14 @@ use Sunnyvale\REST\Resource;
 use Sunnyvale\REST\Response;
 use Sunnyvale\REST\Exceptions;
 
-class Examples extends Resource
+class Examples implements \Sunnyvale\REST\Interfaces\Resource
 {
     public function __construct()
     {
         $this->db = new \Sunnyexample\Database\Example();
     }
 
-    public function delete(Request $request): Response\NoContent
+    public function delete(Request $request): Response
     {
         if (!isset($request->resourceId)) {
             throw new Exceptions\NotSupported("DELETE");
@@ -24,22 +24,21 @@ class Examples extends Resource
         return new Response\NoContent();
     }
 
-    public function get(Request $request): Response\JSON
+    public function get(Request $request): Response
     {
         $db = $this->db;
         $content = ($id = $request->resourceId) ? $db->one($id) : $db->all();
         return new Response\JSON($content);
     }
 
-    public function post(Request $request): Response\JSON
+    public function post(Request $request): Response
     {
-        error_log("DE TUCK");
         $id = $this->db->insert($request->body);
         $content = $this->db->one($id);
         return new Response\JSON($content);
     }
 
-    public function put(Request $request): Response\JSON
+    public function put(Request $request): Response
     {
         $this->db->update($request->resourceId, $request->body);
         $content = $this->db->one($request->resourceId);

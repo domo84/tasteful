@@ -10,7 +10,7 @@ class Rest_Client
     public function __construct()
     {
         $this->curl_client = new Curl_Client();
-        $this->url = "http://localhost:8080";
+        $this->url = "http://localhost:7777";
     }
 
     public function delete(string $resource)

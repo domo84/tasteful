@@ -2,47 +2,57 @@
 
 namespace Sunnyvale\TEST\Resources;
 
-use Sunnyvale\REST\Resource;
+# use Sunnyvale\REST\Resource;
 use Sunnyvale\REST\Request;
 use Sunnyvale\REST\Response;
 
-final class Examples extends Resource
+use Sunnyvale\REST\Interfaces\Resource;
+
+trait DGPP
 {
-    public function delete(Request $request): Response\NoContent
+    public function delete(Request $request): Response
     {
         return new Response\NoContent();
     }
 
-    public function get(Request $request): Response\JSON
+    public function get(Request $request): Response
     {
         return new Response\JSON(array("some" => "thing"));
     }
 
-    public function post(Request $request): Response\JSON
+    public function post(Request $request): Response
     {
         return new Response\JSON(array("some" => "thing"));
     }
 
-    public function put(Request $request): Response\JSON
+    public function put(Request $request): Response
     {
         return new Response\JSON(array("some" => "thing"));
     }
 }
 
-// @codingStandardsIgnoreLine
-final class Articles extends Resource
+final class Examples implements Resource
 {
+    use DGPP;
 }
 
 // @codingStandardsIgnoreLine
-final class Users extends Resource
+final class Articles implements Resource
 {
-    public function get(Request $request): Response\JSON
+    use DGPP;
+}
+
+// @codingStandardsIgnoreLine
+final class Users implements Resource
+{
+    use DGPP;
+
+    public function get(Request $request): Response
     {
         throw new \Sunnyvale\REST\Exceptions\NotFound("user not found");
     }
 
-    public function post(Request $request): Response\JSON
+    public function post(Request $request): Response
     {
         throw new \Sunnyvale\REST\Exceptions\MissingParameter("requires 'name'");
     }

@@ -16,6 +16,11 @@ use Sunnyvale\TEST\Resources\Articles;
  */
 final class ResourceTest extends TestCase
 {
+    public function setUp()
+    {
+        $this->markTestSkipped("Maybe should move to implementation tests");
+    }
+
     /**
      * @dataProvider okProvider
      */

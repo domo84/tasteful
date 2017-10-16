@@ -19,11 +19,13 @@ require_once "../src/Exceptions/NotImplemented.php";
 require_once "../src/Exceptions/NotSupported.php";
 require_once "../src/Exceptions/MissingParameter.php";
 
+require_once "../src/Interfaces/Resource.php";
+
 require_once "tests/lib/traits.php";
 require_once "tests/lib/rest_client.php";
 
-require_once "database.php";
-require_once "database/example.php";
-require_once "database/example_item.php";
-require_once "resources/examples.php";
-require_once "resources/example_items.php";
+require_once "src/Database/SQLite.php";
+require_once "src/Database/Example.php";
+require_once "src/Database/ExampleItem.php";
+require_once "src/Resources/Examples.php";
+require_once "src/Resources/ExampleItems.php";

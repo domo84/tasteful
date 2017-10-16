@@ -17,7 +17,7 @@ final class ResourceExampleItemsTest extends TestCase
 
     public function testInsert()
     {
-        $values = ["_id" => 1, "name" => "Name#1", "content" => "Content#1"];
+        $values = ["id" => 1, "name" => "Name#1", "content" => "Content#1"];
         list($result, $code) = $this->rest_client->post("examples", $values);
         $this->assertEquals($values, $result);
     }
@@ -37,7 +37,7 @@ final class ResourceExampleItemsTest extends TestCase
      */
     public function testDelete($items)
     {
-        $id = $items["_id"];
+        $id = $items["id"];
         list($result, $code) = $this->rest_client->delete("examples/1/items/$id");
         $this->assertNull($result);
         $this->assertEquals(204, $code);
@@ -64,8 +64,11 @@ final class ResourceExampleItemsTest extends TestCase
         $this->assertEquals(0, count($result));
     }
 
-    public static function tearDownAfterClass()
+    public function tearDown()
     {
-        unlink("storage/services.db");
+        $path = __DIR__ . "/../storage/services.db";
+        if (file_exists($path)) {
+            unlink($path);
+        }
     }
 }

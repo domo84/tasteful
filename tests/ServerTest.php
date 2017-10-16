@@ -55,6 +55,8 @@ final class ServerTest extends TestCase
 
     public function testFoundButNotImplemented()
     {
+        $this->markTestSkipped("Maybe move to implementation tests");
+
         $server = new Server(["REQUEST_METHOD" => "POST", "REQUEST_URI" => "/articles"]);
         $server->resources = [
             "articles" => "\Sunnyvale\TEST\Resources\Articles"

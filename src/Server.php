@@ -54,7 +54,13 @@ class Server
 
             $resource = new $class();
             $resource->request = $request;
-            $this->response = $resource->run();
+            $method = strtolower($request->method);
+
+            if (!method_exists($resource, $method)) {
+                throw new Exceptions\NotSupported();
+            }
+
+            $this->response = $resource->$method($request);
         } catch (Exceptions\NotFound $e) {
             $this->response = new Response\NotFound();
             // http_response_code(404);
