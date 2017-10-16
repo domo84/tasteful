@@ -13,31 +13,34 @@ Take a look at the `example_app` for an implementation. But in essence this is w
 
 namespace Sunnyexample\Resources;
 
+use Sunnyvale\REST\Request;
+use Sunnyvale\REST\Response;
+
 require "vendor/autoload.php";
 
 class Examples implements \Sunnyvale\REST\Interfaces\Resource
 {
-    public function delete(\Sunnyvale\REST\Request $request): Response
+    public function delete(Request $request): Response
     {
-        return new \Sunnyvale\REST\Response\NoContent();
+        return new Response\NoContent();
     }
     
-    public function get(\Sunnyvale\REST\Request $request): Response
+    public function get(Request $request): Response
     {
-        return new \Sunnyvale\REST\Response\JSON(array(array("title" => "example#1")));
+        return new Response\JSON([["title" => "example#1"]]);
     }
     
-    public function post(\Sunnyvale\REST\Request $request): Response
+    public function post(Request $request): Response
     {
-        return new \Sunnyvale\REST\Response\JSON(array(array("title" => "example#1")));
+        return new Response\JSON(["title" => "example#1"]);
     }
-    public function put(\Sunnyvale\REST\Request $request): Response
+    public function put(Request $request): Response
     {
-        return new \Sunnyvale\REST\Response\JSON(array(array("title" => "example#1")));
+        return new Response\JSON(["title" => "example#1"]);
     }
 }
 
-class Example_Items implements \Sunnyvale\REST\Interfaces\Resource
+class ExampleItems implements \Sunnyvale\REST\Interfaces\Resource
 {
     /* public function delete,get,post,put */
 }
@@ -45,7 +48,7 @@ class Example_Items implements \Sunnyvale\REST\Interfaces\Resource
 $server = new \Sunnyvale\REST\Server($_SERVER);
 $server->resources = [
     "examples" => "\Sunnyexample\Resources\Examples",
-    "examples/items" => "\Sunnyexample\Resources\Example_Items"
+    "examples/items" => "\Sunnyexample\Resources\ExampleItems"
 ];
 $server->run();
 $server->output();
