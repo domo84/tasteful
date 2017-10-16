@@ -15,9 +15,23 @@ namespace Sunnyexample\Resources;
 
 require "vendor/autoload.php";
 
-class Examples extends \Sunnyvale\REST\Resource
+class Examples implements \Sunnyvale\REST\Interfaces\Resource
 {
-    public function get(\Sunnyvale\REST\Request $request)
+    public function delete(\Sunnyvale\REST\Request $request): Response
+    {
+        return new \Sunnyvale\REST\Response\NoContent();
+    }
+    
+    public function get(\Sunnyvale\REST\Request $request): Response
+    {
+        return new \Sunnyvale\REST\Response\JSON(array(array("title" => "example#1")));
+    }
+    
+    public function post(\Sunnyvale\REST\Request $request): Response
+    {
+        return new \Sunnyvale\REST\Response\JSON(array(array("title" => "example#1")));
+    }
+    public function put(\Sunnyvale\REST\Request $request): Response
     {
         return new \Sunnyvale\REST\Response\JSON(array(array("title" => "example#1")));
     }
