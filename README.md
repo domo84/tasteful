@@ -37,7 +37,7 @@ class Examples implements \Sunnyvale\REST\Interfaces\Resource
     }
 }
 
-class Example_Items extends \Sunnyvale\REST\Resource
+class Example_Items implements \Sunnyvale\REST\Interfaces\Resource
 {
     /* public function delete,get,post,put */
 }
