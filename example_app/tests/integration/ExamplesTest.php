@@ -1,10 +1,11 @@
 <?php
 
-namespace Sunnyexample\TEST;
+namespace Sunnyexample\TEST\Integration;
 
 use PHPUnit\Framework\TestCase;
 
 use Sunnyexample\TEST\Traits\Provider;
+use Sunnyexample\TEST\Rest_Client;
 
 final class ExamplesTest extends TestCase
 {
@@ -96,9 +97,6 @@ final class ExamplesTest extends TestCase
 
     public static function tearDownAfterClass()
     {
-        $path = __DIR__ . "/../../storage/services.db";
-        if (file_exists($path)) {
-            unlink($path);
-        }
+        exec("make clean");
     }
 }

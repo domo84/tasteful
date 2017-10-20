@@ -20,6 +20,18 @@ trait DGPP
         return new Response\JSON(array("some" => "thing"));
     }
 
+    public function head(Request $request): Response
+    {
+        $response = $this->get($request);
+        $response->body = null;
+        return $response;
+    }
+
+    public function options(Request $request): Response
+    {
+        return new Response\Options;
+    }
+
     public function post(Request $request): Response
     {
         return new Response\JSON(array("some" => "thing"));

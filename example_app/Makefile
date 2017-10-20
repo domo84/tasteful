@@ -1,9 +1,9 @@
 start:
-	cd src/public && php -S 0.0.0.0:7777
+	cd public && php -S 0.0.0.0:7777
 
-test:
+test: clean
 	# phpunit --coverage-html coverage --whitelist src --bootstrap tests/requires.php tests
 	phpunit --bootstrap tests/requires.php tests
 
 clean:
-	-rm storage/services.db
+	-rm services.db

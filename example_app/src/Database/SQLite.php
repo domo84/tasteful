@@ -9,8 +9,7 @@ abstract class SQLite extends \SQLite3
 {
     public function __construct()
     {
-        $this->open(__DIR__ . "/../../storage/services.db");
-
+        $this->open(__DIR__ . "/../../services.db");
         $this->query("CREATE TABLE IF NOT EXISTS example (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, content TEXT)");
         $this->query("CREATE TABLE IF NOT EXISTS example_item (id INTEGER PRIMARY KEY AUTOINCREMENT, example_id INTEGER, name TEXT)");
     }

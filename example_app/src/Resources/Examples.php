@@ -31,6 +31,18 @@ class Examples implements \Sunnyvale\REST\Interfaces\Resource
         return new Response\JSON($content);
     }
 
+    public function head(Request $request): Response
+    {
+        $response = $this->get($request);
+        $response->body = null;
+        return $response;
+    }
+
+    public function options(Request $request): Response
+    {
+        return new Response\Options;
+    }
+
     public function post(Request $request): Response
     {
         $id = $this->db->insert($request->body);

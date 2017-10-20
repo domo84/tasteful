@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale;
+namespace Sunnyexample;
 
 /**
  * An example of a general-purpose implementation that includes the optional

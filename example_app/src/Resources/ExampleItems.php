@@ -38,6 +38,18 @@ class ExampleItems implements \Sunnyvale\REST\Interfaces\Resource
         return new Response\JSON($content);
     }
 
+    public function head(Request $request): Response
+    {
+        $response = $this->get($request);
+        $response->body = null;
+        return $response;
+    }
+
+    public function options(Request $request): Response
+    {
+        return new Response\Options;
+    }
+
     public function put(Request $request): Response
     {
         $this->db->update($request->subresourceId, $request->body);
