@@ -1,6 +1,6 @@
 {
     "name": "domolicious/tasteful",
-    "description": "Tasteful REST Server",
+    "description": "TASTEful REST library. Use as a starting point when creating RESTful services",
     "license": "MIT",
     "keywords": ["php", "rest"],
     "authors": [
