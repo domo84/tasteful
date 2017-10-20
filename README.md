@@ -30,6 +30,18 @@ class Examples implements \Sunnyvale\REST\Interfaces\Resource
         return new Response\JSON([["title" => "example#1"]]);
     }
     
+    public function head(Request $request): Response
+    {
+        $response = $this->get($request);
+        $response->body = null;
+        return $response;
+    }
+    
+    public function options(Request $request): Response
+    {
+        return new Response\Options;
+    }
+    
     public function post(Request $request): Response
     {
         return new Response\JSON(["title" => "example#1"]);
@@ -42,7 +54,7 @@ class Examples implements \Sunnyvale\REST\Interfaces\Resource
 
 class ExampleItems implements \Sunnyvale\REST\Interfaces\Resource
 {
-    /* public function delete,get,post,put */
+    /* public function delete,get,head,options,post,put */
 }
 
 $server = new \Sunnyvale\REST\Server($_SERVER);
