@@ -11,12 +11,26 @@ class Server
     public $name = "Sunnyvale API";
     public $version = 1;
     public $authorization = false;
+    public $authorizationWhitelist = ["GET", "OPTIONS"];
     public $request;
 
     public function __construct($server)
     {
         $this->server = $server;
         $this->request = new Request($server);
+    }
+
+    public function authorizationRequired()
+    {
+        if ($this->authorization) {
+            if (in_array($this->request->method, $this->authorizationWhitelist)) {
+                // Request method is in whitelist. No Authorization required
+            } else {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -27,7 +41,7 @@ class Server
         $request = $this->request;
 
         try {
-            if ($this->authorization && $request->method !== "OPTIONS") {
+            if ($this->authorization && !in_array($request->method, $this->authorizationWhitelist)) {
                 if (!$request->token) {
                     $this->response = new Response\Unauthorized();
                     return $this->response;

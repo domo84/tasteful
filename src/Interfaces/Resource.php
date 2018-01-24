@@ -9,8 +9,6 @@ interface Resource
 {
     public function delete(Request $request): Response;
     public function get(Request $request): Response;
-    public function head(Request $request): Response;
-    public function options(Request $request): Response;
     public function post(Request $request): Response;
     public function put(Request $request): Response;
 }
