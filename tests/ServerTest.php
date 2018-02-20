@@ -106,7 +106,7 @@ final class ServerTest extends TestCase
 
     public function testAuthorizationFail()
     {
-        $server = new Server(["REQUEST_METHOD" => "GET", "REQUEST_URI" => ""]);
+        $server = new Server(["REQUEST_METHOD" => "POST", "REQUEST_URI" => ""]);
         $server->authorization = true;
         $this->assertNull($server->request->token);
         $result = $server->run();
