@@ -11,7 +11,7 @@ class Server
     public $name = "Sunnyvale API";
     public $version = 1;
     public $authorization = false;
-    public $authorizationWhitelist = ["GET", "OPTIONS"];
+    public $authorizationWhitelist = ["GET", "HEAD", "OPTIONS"];
     public $request;
 
     public function __construct($server)
