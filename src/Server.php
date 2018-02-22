@@ -113,7 +113,7 @@ class Server
             $response = new Response\NotAcceptable();
         }
 
-        $this->reponse = $response;
+        $this->response = $response;
         return $response;
     }
 
