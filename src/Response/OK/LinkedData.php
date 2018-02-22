@@ -5,11 +5,9 @@ namespace Sunnyvale\REST\Response\OK;
 use Sunnyvale\REST\Response\OK;
 use Sunnyvale\REST\Traits\JSONTools;
 
-class JSON extends OK
+class LinkedData extends OK
 {
     use JSONTools;
-
-    public $decoded;
 
     public function __construct($body)
     {
@@ -17,7 +15,6 @@ class JSON extends OK
         $body .= "\n\r";
 
         $this->body = $body;
-        $this->decoded = $body; # Saved for ld+json purposes
 
         $this->headers[] = "Content-Type: application/ld+json; charset=utf-8";
         $this->headers[] = "Content-Length: " . strlen($this->body);

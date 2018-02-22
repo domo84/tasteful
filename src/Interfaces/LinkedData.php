@@ -9,5 +9,5 @@ use Sunnyvale\REST\Response;
  */
 interface LinkedData
 {
-    public function toLinkedData(Response $response): Response;
+    public function toLinkedData(Response\OK\JSON $response): Response\OK\LinkedData;
 }

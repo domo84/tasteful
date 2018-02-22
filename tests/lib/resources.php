@@ -76,8 +76,8 @@ final class Adventures implements Resource, LinkedData
 {
     use DGPP;
 
-    public function toLinkedData(Response $response): Response
+    public function toLinkedData(Response\OK\JSON $response): Response\OK\LinkedData
     {
-        return new Response\OK\JSON\LinkedData($response->body);
+        return new Response\OK\LinkedData($response->body);
     }
 }

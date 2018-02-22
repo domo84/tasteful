@@ -120,7 +120,7 @@ final class ServerTest extends TestCase
             "adventures" => "\Sunnyvale\TEST\Resources\Adventures"
         ];
         $response = $server->run();
-        $this->assertInstanceOf(Response\OK\JSON\LinkedData::class, $response);
+        $this->assertInstanceOf(Response\OK\LinkedData::class, $response);
     }
 
     public function testNotAcceptableLinkedData()
