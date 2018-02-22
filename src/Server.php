@@ -86,7 +86,7 @@ class Server
                         $response = $resource->$method($request);
                         $response = $resource->toLinkedData($response);
                     } else {
-                        throw new Exceptions\NotAcceptable();
+                        $response = $resource->$method($request);
                     }
                     break;
                 default:
