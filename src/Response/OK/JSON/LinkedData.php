@@ -1,8 +1,8 @@
 <?php
 
-namespace Sunnyvale\REST\Response;
+namespace Sunnyvale\REST\Response\OK\JSON;
 
-use Sunnyvale\REST\Response;
+use Sunnyvale\REST\Response\OK\JSON;
 
 class LinkedData extends JSON
 {

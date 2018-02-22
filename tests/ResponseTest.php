@@ -18,7 +18,7 @@ final class ResponseTest extends TestCase
             "Access-Control-Allow-Headers: Authorization"
         ];
 
-        $response = new Response\JSON(array());
+        $response = new Response\OK\JSON(array());
         $this->assertEquals($headers, array_slice($response->headers, 0, 3));
 
         $response = new Response\Conflict();

@@ -1,13 +1,11 @@
 <?php
 
-namespace Sunnyvale\REST\Response;
+namespace Sunnyvale\REST\Response\OK;
 
-use Sunnyvale\REST\Response;
+use Sunnyvale\REST\Response\OK;
 
-class JSON extends Response
+class JSON extends OK
 {
-    public $code = 200;
-
     public function __construct($body)
     {
         $this->body = $this->isJSON($body) ? $body . "\n\r" : json_encode($body, JSON_UNESCAPED_UNICODE) . "\n\r";

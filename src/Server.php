@@ -51,7 +51,7 @@ class Server
         # Resourceless request, show API information
         if ($request->resource == null) {
             $standard = array("name" => $this->name, "version" => $this->version);
-            $this->response = new Response\JSON($standard);
+            $this->response = new Response\OK\JSON($standard);
             return $this->response;
         }
 

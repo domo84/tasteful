@@ -19,7 +19,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "DELETE", "REQUEST_URI" => ""]);
         $response = $server->run();
-        $this->assertInstanceOf(Response\JSON::class, $response);
+        $this->assertInstanceOf(Response\OK\JSON::class, $response);
     }
 
     public function testNotFound()
@@ -50,7 +50,7 @@ final class ServerTest extends TestCase
             "examples" => "\Sunnyvale\TEST\Resources\Examples"
         ];
         $response = $server->run();
-        $this->assertInstanceOf(Response\JSON::class, $response);
+        $this->assertInstanceOf(Response\OK\JSON::class, $response);
     }
 
     public function testFoundButNotImplemented()
@@ -101,7 +101,7 @@ final class ServerTest extends TestCase
         $server->authorization = true;
         $this->assertEquals("123", $server->request->token);
         $response = $server->run();
-        $this->assertInstanceOf(Response\JSON::class, $response);
+        $this->assertInstanceOf(Response\OK\JSON::class, $response);
     }
 
     public function testAuthorizationFail()
@@ -120,7 +120,7 @@ final class ServerTest extends TestCase
             "adventures" => "\Sunnyvale\TEST\Resources\Adventures"
         ];
         $response = $server->run();
-        $this->assertInstanceOf(Response\LinkedData::class, $response);
+        $this->assertInstanceOf(Response\OK\JSON\LinkedData::class, $response);
     }
 
     public function testNotAcceptableLinkedData()

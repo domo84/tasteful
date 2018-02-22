@@ -17,7 +17,7 @@ trait DGPP
 
     public function get(Request $request): Response
     {
-        return new Response\JSON(array("some" => "thing"));
+        return new Response\OK\JSON(array("some" => "thing"));
     }
 
     public function head(Request $request): Response
@@ -34,12 +34,12 @@ trait DGPP
 
     public function post(Request $request): Response
     {
-        return new Response\JSON(array("some" => "thing"));
+        return new Response\OK\JSON(array("some" => "thing"));
     }
 
     public function put(Request $request): Response
     {
-        return new Response\JSON(array("some" => "thing"));
+        return new Response\OK\JSON(array("some" => "thing"));
     }
 }
 
@@ -78,6 +78,6 @@ final class Adventures implements Resource, LinkedData
 
     public function toLinkedData(Response $response): Response
     {
-        return new Response\LinkedData($response->body);
+        return new Response\OK\JSON\LinkedData($response->body);
     }
 }

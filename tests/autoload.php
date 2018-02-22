@@ -3,12 +3,13 @@
 require_once "src/Response.php";
 require_once "src/Response/Conflict.php";
 require_once "src/Response/Created.php";
-require_once "src/Response/JSON.php";
-require_once "src/Response/LinkedData.php";
 require_once "src/Response/NoContent.php";
 require_once "src/Response/NotAcceptable.php";
 require_once "src/Response/NotFound.php";
 require_once "src/Response/NotImplemented.php";
+require_once "src/Response/OK.php";
+require_once "src/Response/OK/JSON.php";
+require_once "src/Response/OK/JSON/LinkedData.php";
 require_once "src/Response/Options.php";
 require_once "src/Response/Unauthorized.php";
 require_once "src/Response/UnprocessableEntity.php";

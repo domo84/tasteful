@@ -50,24 +50,24 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\JSON
+     * @covers \Sunnyvale\REST\Response\OK\JSON
      */
     public function testJSON()
     {
         $example = array("name" => "A Sunny example!");
-        $response = new Response\JSON($example);
+        $response = new Response\OK\JSON($example);
         $this->assertEquals(200, $response->code);
         $this->assertTrue(is_string($response->body));
         $body = json_decode($response->body, true);
         $this->assertEquals($example, $body);
 
-        $res2 = new Response\JSON('[{"name": "A Sunny example!"}]');
+        $res2 = new Response\OK\JSON('[{"name": "A Sunny example!"}]');
         $this->assertEquals(200, $res2->code);
 
-        $res3 = new Response\JSON('{"name": "A Sunny example!"}');
+        $res3 = new Response\OK\JSON('{"name": "A Sunny example!"}');
         $this->assertEquals(200, $res3->code);
 
-        $res4 = new Response\JSON("Well, I dno");
+        $res4 = new Response\OK\JSON("Well, I dno");
         $this->assertEquals(200, $res4->code);
     }
 
