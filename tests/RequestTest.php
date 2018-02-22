@@ -30,6 +30,7 @@ final class RequestTest extends TestCase
     public function provider()
     {
         $server1 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "GET",
             "REQUEST_URI" => "/examples"
         ];
@@ -45,6 +46,7 @@ final class RequestTest extends TestCase
         ];
 
         $server2 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "DELETE",
             "REQUEST_URI" => "/examples/10"
         ];
@@ -60,6 +62,7 @@ final class RequestTest extends TestCase
         ];
 
         $server3 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "POST",
             "REQUEST_URI" => "/examples/10/items",
             "_BODY" => json_encode(["name" => "Name#1", "email" => "mail@example.com"])
@@ -77,6 +80,7 @@ final class RequestTest extends TestCase
         ];
 
         $server4 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "PUT",
             "REQUEST_URI" => "/examples/10/items/4"
         ];
@@ -94,6 +98,7 @@ final class RequestTest extends TestCase
         ];
 
         $server5 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "OPTIONS",
             "REQUEST_URI" => "/examples"
         ];
@@ -109,6 +114,7 @@ final class RequestTest extends TestCase
         ];
 
         $server6 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "GET",
             "REQUEST_URI" => "/examples",
             "_GET" => ["q" => "tomatoes"]
@@ -125,6 +131,7 @@ final class RequestTest extends TestCase
         ];
 
         $server7 = [
+            "HTTP_ACCEPT" => "text/html",
             "REQUEST_METHOD" => "GET",
             "REQUEST_URI" => "/examples",
             "HTTP_AUTHORIZATION" => "token 123"

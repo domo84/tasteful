@@ -40,60 +40,81 @@ class Server
     {
         $request = $this->request;
 
+        # Authorization required or not
+        if ($this->authorization && !in_array($request->method, $this->authorizationWhitelist)) {
+            if (!$request->token) {
+                $this->response = new Response\Unauthorized();
+                return $this->response;
+            }
+        }
+
+        # Resourceless request, show API information
+        if ($request->resource == null) {
+            $standard = array("name" => $this->name, "version" => $this->version);
+            $this->response = new Response\JSON($standard);
+            return $this->response;
+        }
+
+        # Resource is not registered
+        if (!isset($this->resources[$request->path])) {
+            $this->response = new Response\NotFound();
+            return $this->response;
+        }
+
+        $class = $this->resources[$request->path];
+
+        # Registered but not implemented
+        if (!class_exists($class)) {
+            $this->response = new Response\NotImplemented();
+            return $this->response;
+        }
+
         try {
-            if ($this->authorization && !in_array($request->method, $this->authorizationWhitelist)) {
-                if (!$request->token) {
-                    $this->response = new Response\Unauthorized();
-                    return $this->response;
-                }
-            }
-
-            if ($request->resource == null) {
-                $standard = array("name" => $this->name, "version" => $this->version);
-                $this->response = new Response\JSON($standard);
-                return $this->response;
-            }
-           
-            if (!isset($this->resources[$request->path])) {
-                $this->response = new Response\NotFound();
-                return $this->response;
-            }
-
-            $class = $this->resources[$request->path];
-
-            if (!class_exists($class)) {
-                $this->response = new Response\NotImplemented();
-                return $this->response;
-            }
-
             $resource = new $class();
             $resource->request = $request;
             $method = strtolower($request->method);
 
+            # Resource method not supported, i.e. "DELETE /users"
             if (!method_exists($resource, $method)) {
                 throw new Exceptions\NotSupported();
             }
 
-            $this->response = $resource->$method($request);
+            # Content negotitation:
+            switch ($request->headers["accept"]) {
+                case "application/ld+json":
+                    if ($resource instanceof \Sunnyvale\REST\Interfaces\LinkedData) {
+                        $response = $resource->$method($request);
+                        $response = $resource->toLinkedData($response);
+                    } else {
+                        throw new Exceptions\NotAcceptable();
+                    }
+                    break;
+                case "application/json":
+                    # The API default
+                    $response = $resource->$method($request);
+                    break;
+                default:
+                    # If client specified something else, deny it
+                    # Or maybe give the JSON response anyway as it is a pretty good default
+                    # It will be up to the client, based on response content-type, to decide
+                    # whether the response is acceptable or not.
+                    # TODO: Let us test it a little and see how annoying it will be
+                    throw new Exceptions\NotAcceptable();
+            }
         } catch (Exceptions\NotFound $e) {
-            $this->response = new Response\NotFound();
-            // http_response_code(404);
-            // error_log(sprintf("The resource '%s' you are looking for does not exist", $e->getMessage()));
+            $response = new Response\NotFound();
         } catch (Exceptions\NotSupported $e) {
-            $this->response = new Response\NotImplemented();
-            // http_response_code(501);
-            // error_log(sprintf("The HTTP verb '%s' is not supported", $e->getMessage()));
+            $response = new Response\NotImplemented();
         } catch (Exceptions\NotImplemented $e) {
-            $this->response = new Response\NotImplemented();
-            // http_response_code(501);
-            // error_log(sprintf("The HTTP verb '%s' is not implemeneted for this resource", $e->getMessage()));
+            $response = new Response\NotImplemented();
         } catch (Exceptions\MissingParameter $e) {
-            $this->response = new Response\UnprocessableEntity();
-            // http_response_code(422);
-            // error_log(sprintf("Client sent faulty data: %s", $e->getMessage()));
+            $response = new Response\UnprocessableEntity();
+        } catch (Exceptions\NotAcceptable $e) {
+            $response = new Response\NotAcceptable();
         }
 
-        return $this->response;
+        $this->reponse = $response;
+        return $response;
     }
 
     public function output()

@@ -2,11 +2,11 @@
 
 namespace Sunnyvale\TEST\Resources;
 
-# use Sunnyvale\REST\Resource;
 use Sunnyvale\REST\Request;
 use Sunnyvale\REST\Response;
 
 use Sunnyvale\REST\Interfaces\Resource;
+use Sunnyvale\REST\Interfaces\LinkedData;
 
 trait DGPP
 {
@@ -43,6 +43,7 @@ trait DGPP
     }
 }
 
+// @codingStandardsIgnoreLine
 final class Examples implements Resource
 {
     use DGPP;
@@ -67,5 +68,16 @@ final class Users implements Resource
     public function post(Request $request): Response
     {
         throw new \Sunnyvale\REST\Exceptions\MissingParameter("requires 'name'");
+    }
+}
+
+// @codingStandardsIgnoreLine
+final class Adventures implements Resource, LinkedData
+{
+    use DGPP;
+
+    public function toLinkedData(Response $response): Response
+    {
+        return new Response\LinkedData($response->body);
     }
 }
