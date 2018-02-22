@@ -92,6 +92,8 @@ class Server
                 default:
                     # For the sake of development and testing. This is a sane default.
                     # Chrome sends text/html. If empty (curl) Apache2 sets it to */*
+                    # Even though the clients Accept might be different from the response
+                    # it is up to the client to determine if it was acceptable or not.
                     $response = $resource->$method($request);
             }
         } catch (Exceptions\NotFound $e) {
