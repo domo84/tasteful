@@ -123,14 +123,14 @@ final class ServerTest extends TestCase
         $this->assertInstanceOf(Response\OK\LinkedData::class, $response);
     }
 
-    public function testNotAcceptableLinkedData()
+    public function testNotImplementedLinkedData()
     {
         $server = new Server(["HTTP_ACCEPT" => "application/ld+json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/articles"]);
         $server->resources = [
             "articles" => "\Sunnyvale\TEST\Resources\Articles"
         ];
         $response = $server->run();
-        $this->assertInstanceOf(Response\NotAcceptable::class, $response);
+        $this->assertInstanceOf(Response\OK\JSON::class, $response);
     }
 
     /**
