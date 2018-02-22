@@ -89,17 +89,10 @@ class Server
                         throw new Exceptions\NotAcceptable();
                     }
                     break;
-                case "application/json":
-                    # The API default
-                    $response = $resource->$method($request);
-                    break;
                 default:
-                    # If client specified something else, deny it
-                    # Or maybe give the JSON response anyway as it is a pretty good default
-                    # It will be up to the client, based on response content-type, to decide
-                    # whether the response is acceptable or not.
-                    # TODO: Let us test it a little and see how annoying it will be
-                    throw new Exceptions\NotAcceptable();
+                    # For the sake of development and testing. This is a sane default.
+                    # Chrome sends text/html. If empty (curl) Apache2 sets it to */*
+                    $response = $resource->$method($request);
             }
         } catch (Exceptions\NotFound $e) {
             $response = new Response\NotFound();

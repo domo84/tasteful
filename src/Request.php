@@ -4,7 +4,7 @@ namespace Sunnyvale\REST;
 
 class Request
 {
-    public $headers = ["accept" => "application/json"];
+    public $headers = [];
     public $method;
     public $path = null;
     public $resource = null;
