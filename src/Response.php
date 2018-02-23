@@ -16,6 +16,6 @@ abstract class Response
     public $headers = array(
         "Access-Control-Allow-Origin: *",
         "Access-Control-Allow-Methods: DELETE, GET, HEAD, OPTIONS, POST, PUT",
-        "Access-Control-Allow-Headers: Authorization"
+        "Access-Control-Allow-Headers: Authorization, Content-Type"
     );
 }
