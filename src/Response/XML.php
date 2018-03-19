@@ -12,6 +12,5 @@ class XML extends Response
     {
         $this->body = $body;
         $this->headers[] = "Content-Type: text/xml; charset=utf-8";
-        $this->headers[] = "Content-Length: " . strlen($this->body);
     }
 }

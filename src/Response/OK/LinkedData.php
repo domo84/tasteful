@@ -17,6 +17,5 @@ class LinkedData extends OK
         $this->body = $body;
 
         $this->headers[] = "Content-Type: application/ld+json; charset=utf-8";
-        $this->headers[] = "Content-Length: " . strlen($this->body);
     }
 }
