@@ -30,6 +30,26 @@ final class ServerTest extends TestCase
         $this->assertInstanceOf(Response\NotFound::class, $response);
     }
 
+	public function testAuthorizationRequired()
+	{
+        $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "POST", "REQUEST_URI" => "/examples"]);
+		$this->assertFalse($server->authorizationRequired());
+
+		$server->authorization = true;
+		$this->assertTrue($server->authorizationRequired());
+	}
+
+	public function testAuthorizationWhitelist()
+	{
+        $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/examples"]);
+		$server->authorizationWhitelist = [];
+		$server->authorization = true;
+		$this->assertTrue($server->authorizationRequired());
+
+		$server->authorizationWhitelist = ["GET"];
+		$this->assertFalse($server->authorizationRequired());
+	}
+
     /**
      * Testing registered but not implemented handler
      */

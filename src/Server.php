@@ -25,6 +25,7 @@ class Server
         if ($this->authorization) {
             if (in_array($this->request->method, $this->authorizationWhitelist)) {
                 // Request method is in whitelist. No Authorization required
+				return false;
             } else {
                 return true;
             }

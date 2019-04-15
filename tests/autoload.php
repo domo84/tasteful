@@ -12,6 +12,7 @@ require_once "src/Response/NotImplemented.php";
 require_once "src/Response/OK.php";
 require_once "src/Response/OK/JSON.php";
 require_once "src/Response/OK/LinkedData.php";
+require_once "src/Response/OK/XML.php";
 require_once "src/Response/Options.php";
 require_once "src/Response/Unauthorized.php";
 require_once "src/Response/UnprocessableEntity.php";

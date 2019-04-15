@@ -16,7 +16,7 @@ use Sunnyvale\TEST\Resources\Articles;
  */
 final class ResourceTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->markTestSkipped("Maybe should move to implementation tests");
     }

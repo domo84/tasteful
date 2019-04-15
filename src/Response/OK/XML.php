@@ -1,10 +1,10 @@
 <?php
 
-namespace Sunnyvale\REST\Response;
+namespace Sunnyvale\REST\Response\OK;
 
-use Sunnyvale\REST\Response;
+use Sunnyvale\REST\Response\OK;
 
-class XML extends Response
+class XML extends OK
 {
     public $code = 200;
 
