@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\TEST;
+namespace Tasteful\TEST;
 
 use PHPUnit\Framework\TestCase;
 use Tasteful\Request;

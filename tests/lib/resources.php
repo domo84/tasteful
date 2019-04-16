@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\TEST\Resources;
+namespace Tasteful\TEST\Resources;
 
 use Tasteful\Request;
 use Tasteful\Response;

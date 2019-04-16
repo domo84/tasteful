@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\TEST;
+namespace Tasteful\TEST;
 
 use PHPUnit\Framework\TestCase;
 
@@ -8,8 +8,8 @@ use Tasteful\Resource;
 use Tasteful\Request;
 use Tasteful\Response;
 
-use Sunnyvale\TEST\Resources\Examples;
-use Sunnyvale\TEST\Resources\Articles;
+use Tasteful\TEST\Resources\Examples;
+use Tasteful\TEST\Resources\Articles;
 
 /**
  * @covers \Tasteful\Resource

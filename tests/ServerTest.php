@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\TEST;
+namespace Tasteful\TEST;
 
 use PHPUnit\Framework\TestCase;
 use Tasteful\Server;
@@ -8,7 +8,7 @@ use Tasteful\Response;
 use Tasteful\Request;
 use Tasteful\Resource;
 
-use Sunnyvale\TEST\Resources\Users;
+use Tasteful\TEST\Resources\Users;
 
 /**
  * @covers \Tasteful\Server
@@ -57,7 +57,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "POST", "REQUEST_URI" => "/examples"]);
         $server->resources = [
-            "examples" => "\Sunnyvale\TEST\Resources\DoesNotExists"
+            "examples" => "\Tasteful\TEST\Resources\DoesNotExists"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\NotImplemented::class, $response);
@@ -67,7 +67,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/examples"]);
         $server->resources = [
-            "examples" => "\Sunnyvale\TEST\Resources\Examples"
+            "examples" => "\Tasteful\TEST\Resources\Examples"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\OK\JSON::class, $response);
@@ -79,7 +79,7 @@ final class ServerTest extends TestCase
 
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "POST", "REQUEST_URI" => "/articles"]);
         $server->resources = [
-            "articles" => "\Sunnyvale\TEST\Resources\Articles"
+            "articles" => "\Tasteful\TEST\Resources\Articles"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\NotImplemented::class, $response);
@@ -89,7 +89,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "WHIPE", "REQUEST_URI" => "/users"]);
         $server->resources = [
-            "users" => "\Sunnyvale\TEST\Resources\Users"
+            "users" => "\Tasteful\TEST\Resources\Users"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\NotImplemented::class, $response);
@@ -99,7 +99,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/users/10"]);
         $server->resources = [
-            "users" => "\Sunnyvale\TEST\Resources\Users"
+            "users" => "\Tasteful\TEST\Resources\Users"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\NotFound::class, $response);
@@ -109,7 +109,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "POST", "REQUEST_URI" => "/users"]);
         $server->resources = [
-            "users" => "\Sunnyvale\TEST\Resources\Users"
+            "users" => "\Tasteful\TEST\Resources\Users"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\UnprocessableEntity::class, $response);
@@ -137,7 +137,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/ld+json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/adventures/10"]);
         $server->resources = [
-            "adventures" => "\Sunnyvale\TEST\Resources\Adventures"
+            "adventures" => "\Tasteful\TEST\Resources\Adventures"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\OK\LinkedData::class, $response);
@@ -147,7 +147,7 @@ final class ServerTest extends TestCase
     {
         $server = new Server(["HTTP_ACCEPT" => "application/ld+json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/articles"]);
         $server->resources = [
-            "articles" => "\Sunnyvale\TEST\Resources\Articles"
+            "articles" => "\Tasteful\TEST\Resources\Articles"
         ];
         $response = $server->run();
         $this->assertInstanceOf(Response\OK\JSON::class, $response);
@@ -162,7 +162,7 @@ final class ServerTest extends TestCase
         $this->expectOutputString($expected);
         $server = new Server(["HTTP_ACCEPT" => "application/json", "REQUEST_METHOD" => "GET", "REQUEST_URI" => "/examples"]);
         $server->resources = [
-            "examples" => "\Sunnyvale\TEST\Resources\Examples"
+            "examples" => "\Tasteful\TEST\Resources\Examples"
         ];
         $response = $server->run();
         $server->output();
