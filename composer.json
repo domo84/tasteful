@@ -14,7 +14,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Sunnyvale\\REST\\": "src"
+            "Tasteful\\": "src"
         }
     }
 }
