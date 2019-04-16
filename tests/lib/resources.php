@@ -2,11 +2,11 @@
 
 namespace Sunnyvale\TEST\Resources;
 
-use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Response;
+use Tasteful\Request;
+use Tasteful\Response;
 
-use Sunnyvale\REST\Interfaces\Resource;
-use Sunnyvale\REST\Interfaces\LinkedData;
+use Tasteful\Interfaces\Resource;
+use Tasteful\Interfaces\LinkedData;
 
 trait DGPP
 {
@@ -62,12 +62,12 @@ final class Users implements Resource
 
     public function get(Request $request): Response
     {
-        throw new \Sunnyvale\REST\Exceptions\NotFound("user not found");
+        throw new \Tasteful\Exceptions\NotFound("user not found");
     }
 
     public function post(Request $request): Response
     {
-        throw new \Sunnyvale\REST\Exceptions\MissingParameter("requires 'name'");
+        throw new \Tasteful\Exceptions\MissingParameter("requires 'name'");
     }
 }
 

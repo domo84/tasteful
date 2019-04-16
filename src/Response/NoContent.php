@@ -1,8 +1,8 @@
 <?php
 
-namespace Sunnyvale\REST\Response;
+namespace Tasteful\Response;
 
-use Sunnyvale\REST\Response;
+use Tasteful\Response;
 
 class NoContent extends Response
 {

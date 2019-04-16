@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\REST\Exceptions;
+namespace Tasteful\Exceptions;
 
 class MissingParameter extends \Exception
 {

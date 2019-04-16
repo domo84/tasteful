@@ -1,9 +1,9 @@
 <?php
 
-namespace Sunnyvale\REST\Response\OK;
+namespace Tasteful\Response\OK;
 
-use Sunnyvale\REST\Response\OK;
-use Sunnyvale\REST\Traits\JSONTools;
+use Tasteful\Response\OK;
+use Tasteful\Traits\JSONTools;
 
 class JSON extends OK
 {

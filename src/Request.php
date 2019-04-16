@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\REST;
+namespace Tasteful;
 
 class Request
 {

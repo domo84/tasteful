@@ -1,9 +1,9 @@
 <?php
 
-namespace Sunnyvale\REST;
+namespace Tasteful;
 
-use Sunnyvale\REST\Exceptions\NotImplemented as NotImplemented;
-use Sunnyvale\REST\Exceptions\NotSupported as NotSupported;
+use Tasteful\Exceptions\NotImplemented as NotImplemented;
+use Tasteful\Exceptions\NotSupported as NotSupported;
 
 abstract class Resource
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Sunnyvale\REST\Interfaces;
+namespace Tasteful\Interfaces;
 
-use Sunnyvale\REST\Response;
+use Tasteful\Response;
 
 /**
  * @description Implemented by resources to support transformation of JSON to LinkedData+JSON

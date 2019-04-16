@@ -3,12 +3,12 @@
 namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
-use Sunnyvale\REST\Response;
+use Tasteful\Response;
 
 class ResponsesTest extends TestCase
 {
     /**
-     * @covers \Sunnyvale\REST\Response\NotFound
+     * @covers \Tasteful\Response\NotFound
      */
     public function testNotFound()
     {
@@ -18,7 +18,7 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\Conflict
+     * @covers \Tasteful\Response\Conflict
      */
     public function testConflict()
     {
@@ -28,7 +28,7 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\NoContent
+     * @covers \Tasteful\Response\NoContent
      */
     public function testNoContent()
     {
@@ -38,7 +38,7 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\Created
+     * @covers \Tasteful\Response\Created
      */
     public function testCreated()
     {
@@ -50,7 +50,7 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\OK\JSON
+     * @covers \Tasteful\Response\OK\JSON
      */
     public function testJSON()
     {
@@ -91,7 +91,7 @@ class ResponsesTest extends TestCase
 	}
 
 	/**
-	 * @covers \Sunnyvale\REST\Response\OK\XML
+	 * @covers \Tasteful\Response\OK\XML
 	 */
 	public function testXML()
 	{
@@ -103,7 +103,7 @@ class ResponsesTest extends TestCase
 	}
 
     /**
-     * @covers \Sunnyvale\REST\Response\NotImplemented
+     * @covers \Tasteful\Response\NotImplemented
      */
     public function testNotImplemented()
     {
@@ -113,7 +113,7 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\UnprocessableEntity
+     * @covers \Tasteful\Response\UnprocessableEntity
      */
     public function testUnprocessableEntity()
     {
@@ -123,7 +123,7 @@ class ResponsesTest extends TestCase
     }
 
     /**
-     * @covers \Sunnyvale\REST\Response\Options
+     * @covers \Tasteful\Response\Options
      */
     public function testOptions()
     {

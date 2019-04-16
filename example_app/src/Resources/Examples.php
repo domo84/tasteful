@@ -2,12 +2,12 @@
 
 namespace Sunnyexample\Resources;
 
-use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Resource;
-use Sunnyvale\REST\Response;
-use Sunnyvale\REST\Exceptions;
+use Tasteful\Request;
+use Tasteful\Resource;
+use Tasteful\Response;
+use Tasteful\Exceptions;
 
-class Examples implements \Sunnyvale\REST\Interfaces\Resource
+class Examples implements \Tasteful\Interfaces\Resource
 {
     public function __construct()
     {

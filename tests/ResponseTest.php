@@ -3,10 +3,10 @@
 namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
-use Sunnyvale\REST\Response;
+use Tasteful\Response;
 
 /**
- * @covers \Sunnyvale\REST\Response
+ * @covers \Tasteful\Response
  */
 final class ResponseTest extends TestCase
 {

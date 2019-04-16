@@ -2,8 +2,8 @@
 
 namespace Sunnyexample\Database;
 
-use Sunnyvale\REST\Exceptions\NotFound;
-use Sunnyvale\REST\Exceptions\MissingParameter;
+use Tasteful\Exceptions\NotFound;
+use Tasteful\Exceptions\MissingParameter;
 
 abstract class SQLite extends \SQLite3
 {

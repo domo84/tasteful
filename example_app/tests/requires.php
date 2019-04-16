@@ -5,7 +5,7 @@ require_once "psr4-autoloader.php";
 $loader = new Sunnyexample\Psr4AutoloaderClass();
 $loader->register();
 
-$loader->addNamespace("Sunnyvale\REST", "../../src");
+$loader->addNamespace("Tasteful", "../../src");
 $loader->addNamespace("Sunnyexample", "../src");
 
 require_once "tests/lib/traits.php";

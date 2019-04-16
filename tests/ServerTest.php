@@ -3,15 +3,15 @@
 namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
-use Sunnyvale\REST\Server;
-use Sunnyvale\REST\Response;
-use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Resource;
+use Tasteful\Server;
+use Tasteful\Response;
+use Tasteful\Request;
+use Tasteful\Resource;
 
 use Sunnyvale\TEST\Resources\Users;
 
 /**
- * @covers \Sunnyvale\REST\Server
+ * @covers \Tasteful\Server
  */
 final class ServerTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\REST;
+namespace Tasteful;
 
 /**
  * @note Access-Control-Allow-Headers always include, no need to add them:

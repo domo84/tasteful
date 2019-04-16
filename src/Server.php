@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\REST;
+namespace Tasteful;
 
 class Server
 {
@@ -83,7 +83,7 @@ class Server
             # Content negotitation:
             switch ($request->headers["accept"]) {
                 case "application/ld+json":
-                    if ($resource instanceof \Sunnyvale\REST\Interfaces\LinkedData) {
+                    if ($resource instanceof \Tasteful\Interfaces\LinkedData) {
                         $response = $resource->$method($request);
                         $response = $resource->toLinkedData($response);
                     } else {

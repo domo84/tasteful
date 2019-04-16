@@ -4,15 +4,15 @@ namespace Sunnyvale\TEST;
 
 use PHPUnit\Framework\TestCase;
 
-use Sunnyvale\REST\Resource;
-use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Response;
+use Tasteful\Resource;
+use Tasteful\Request;
+use Tasteful\Response;
 
 use Sunnyvale\TEST\Resources\Examples;
 use Sunnyvale\TEST\Resources\Articles;
 
 /**
- * @covers \Sunnyvale\REST\Resource
+ * @covers \Tasteful\Resource
  */
 final class ResourceTest extends TestCase
 {
@@ -31,7 +31,7 @@ final class ResourceTest extends TestCase
     }
 
     /**
-     * @expectedException Sunnyvale\REST\Exceptions\NotImplemented
+     * @expectedException Tasteful\Exceptions\NotImplemented
      * @dataProvider notImplementedProvider
      */
     public function testRunNonImplementedMethods($res)
@@ -40,7 +40,7 @@ final class ResourceTest extends TestCase
     }
 
     /**
-     * @expectedException Sunnyvale\REST\Exceptions\NotAcceptable
+     * @expectedException Tasteful\Exceptions\NotAcceptable
      * @dataProvider notAcceptableProvider
      */
     public function testNotAcceptable($res)
@@ -49,7 +49,7 @@ final class ResourceTest extends TestCase
     }
 
     /**
-     * @expectedException Sunnyvale\REST\Exceptions\NotSupported
+     * @expectedException Tasteful\Exceptions\NotSupported
      */
     public function testNotSupported()
     {

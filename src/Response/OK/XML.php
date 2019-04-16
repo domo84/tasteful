@@ -1,8 +1,8 @@
 <?php
 
-namespace Sunnyvale\REST\Response\OK;
+namespace Tasteful\Response\OK;
 
-use Sunnyvale\REST\Response\OK;
+use Tasteful\Response\OK;
 
 class XML extends OK
 {

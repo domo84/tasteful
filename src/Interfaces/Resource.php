@@ -1,9 +1,9 @@
 <?php
 
-namespace Sunnyvale\REST\Interfaces;
+namespace Tasteful\Interfaces;
 
-use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Response;
+use Tasteful\Request;
+use Tasteful\Response;
 
 interface Resource
 {

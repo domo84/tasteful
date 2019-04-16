@@ -13,12 +13,12 @@ Take a look at the `example_app` for an implementation. But in essence this is w
 
 namespace Sunnyexample\Resources;
 
-use Sunnyvale\REST\Request;
-use Sunnyvale\REST\Response;
+use Tasteful\Request;
+use Tasteful\Response;
 
 require "vendor/autoload.php";
 
-class Examples implements \Sunnyvale\REST\Interfaces\Resource
+class Examples implements \Tasteful\Interfaces\Resource
 {
     public function delete(Request $request): Response
     {
@@ -52,12 +52,12 @@ class Examples implements \Sunnyvale\REST\Interfaces\Resource
     }
 }
 
-class ExampleItems implements \Sunnyvale\REST\Interfaces\Resource
+class ExampleItems implements \Tasteful\Interfaces\Resource
 {
     /* public function delete,get,head,options,post,put */
 }
 
-$server = new \Sunnyvale\REST\Server($_SERVER);
+$server = new \Tasteful\Server($_SERVER);
 $server->resources = [
     "examples" => "\Sunnyexample\Resources\Examples",
     "examples/items" => "\Sunnyexample\Resources\ExampleItems"

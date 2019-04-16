@@ -1,6 +1,6 @@
 <?php
 
-namespace Sunnyvale\REST\Traits;
+namespace Tasteful\Traits;
 
 trait JSONTools
 {
